@@ -1,6 +1,5 @@
-import { FaAd, FaBook, FaCalendar, FaEnvelope, FaHome, FaList, FaSearch, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
+
 import { NavLink, Outlet } from "react-router-dom";
-// import useCart from "../hooks/useCart";
 // import useAdmin from "../hooks/useAdmin";
 import adminHome from '../../public/administrator.png'
 import manageIcon from '../../public/manage.png';
@@ -11,20 +10,22 @@ import contestIcon from '../../public/contest.png';
 import submitIcon from '../../public/submit.png';
 import createCOntestIcon from '../../public/design.png'
 import homeIcon from '../../public/house.png';
+import useAdmin from "../Hooks/useAdmin";
 
 
 const Dashboard = () => {
-    // const [cart] = useCart();
 
     // TODO: get isAdmin value from the database
-    // const [isAdmin] = useAdmin();
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="flex">
             {/* dashboard side bar */}
             <div className="w-64 min-h-screen bg-orange-400">
                 <ul className="menu p-4">
-                     <>
+                    {
+                        isAdmin?
+                        <>
                             <li>
                                 <NavLink to="/dashboard/adminUser">
                                     <img src={adminHome}/>
@@ -35,26 +36,32 @@ const Dashboard = () => {
                                     <img src={manageIcon}/>
                                     Manage Contest</NavLink>
                             </li>
+                            <li>
+                                <NavLink to="/dashboard/allUsers">
+                                    <img src={manageIcon}/>
+                                    All Users</NavLink>
+                            </li>
                         </>
-                            
+                        :
                         <>
-                                <li>
-                                    <NavLink to="/dashboard/Profile">
-                                        <img src={profile}/>
-                                        User Profile</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/winningContest">
-                                        <img src={winningIcon}/>
-                                        Winning Contest</NavLink>
-                                </li>
-                                
-                                <li>
-                                    <NavLink to="/dashboard/participatedContest">
-                                        <img src={participatedIcon}/>
-                                        Participated Contest</NavLink>
-                                </li>
-                            </>
+                            <li>
+                                <NavLink to="/dashboard/Profile">
+                                    <img src={profile}/>
+                                    User Profile</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/winningContest">
+                                    <img src={winningIcon}/>
+                                    Winning Contest</NavLink>
+                            </li>
+                            
+                            <li>
+                                <NavLink to="/dashboard/participatedContest">
+                                    <img src={participatedIcon}/>
+                                    Participated Contest</NavLink>
+                            </li>
+                        </>
+                    }
                     
                     {/* shared nav links */}
                     <div className="divider"></div>

@@ -15,6 +15,8 @@ import AddContest from "../Pages/DashBoard/CreatorDashBoard/AddContest/AddContes
 import ContestSubmitted from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/ContestSubmitted";
 import CreatedContest from "../Pages/DashBoard/CreatorDashBoard/CreatedContest/CreatedContest";
 import ContestDetails from "../Pages/Shared/ContestDetails/ContestDetails";
+import AllUsers from "../Pages/DashBoard/AdminDashBoard/AllUsers/AllUsers";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
     {
@@ -64,11 +66,15 @@ export const router = createBrowserRouter([
           // admin only routes
           {
             path: 'adminUser',
-            element: <AdminUser></AdminUser>
+            element: <AdminRoute><AdminUser></AdminUser></AdminRoute>
           },
           {
             path: 'manageContest',
-            element: <ManageContest></ManageContest>
+            element: <AdminRoute><ManageContest></ManageContest></AdminRoute>
+          },
+          {
+            path: 'allUsers',
+            element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
           },
           //creator routes
           {
