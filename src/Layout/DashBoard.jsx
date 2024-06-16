@@ -70,7 +70,7 @@ const Dashboard = () => {
                     <li>
                         <NavLink to="/dashboard/addContest">
                             <img className="w-1/3" src={contestIcon}/>
-                            Add Contest</NavLink>
+                            <span className="-mr-3">Add Contest</span></NavLink>
                     </li>
                     <li>
                         <NavLink to="/dashboard/contestSubmitted">
