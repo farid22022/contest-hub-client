@@ -12,6 +12,10 @@ const ArrayOfContests = () => {
         setFilteredContests(contests);
       }, [contests]);
 
+    if(!contests.length){
+        return <progress className="text-center mt-56 h-4  justify-center  progress w-120">Out Of Network</progress>
+    }
+
     
     // console.log(contests);
     const handleSearch = () => {

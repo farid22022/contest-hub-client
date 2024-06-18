@@ -22,7 +22,7 @@ const SignUp = () => {
                     .then(() => {
                         const userInfo = {
                             name: data.name,
-                            email: data.email
+                            email: data.email,
                         }
                         axiosPublic.post('/users', userInfo)
                             .then(res => {

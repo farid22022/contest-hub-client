@@ -60,6 +60,23 @@ const AllUsers = () => {
             }
         })
     }
+    const handleMakeCreator = (user) =>{
+      axiosSecure.patch(`/users/creator/${user._id}`)
+        .then(res =>{
+            console.log(res.data)
+            if(res.data.modifiedCount > 0){
+                refetch();
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `${user.name} is an Contest Creator Now!`,
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+            }
+        })
+    }
+    
 
     return (
         <div>
@@ -75,7 +92,8 @@ const AllUsers = () => {
         </th>
         <th>Name</th>
         <th>Email</th>
-        <th>Action</th>
+        <th>Admin</th>
+        <th>Creator</th>
         <th>User Details</th>
       </tr>
     </thead>
@@ -114,10 +132,18 @@ const AllUsers = () => {
             </td>
             <th>
                 {
-                  !user.role ?
+                  !(user.isAdmin === 'admin') ?
                   <button onClick={() =>handleMakeAdmin(user)} className="btn btn-ghost btn-xs pb-3 pt-1 bg-red-600"> Make Admin</button>
                   :
                   <button>Admin</button>
+                }
+            </th>
+            <th>
+                {
+                  !(user.isCreator === 'creator') ?
+                  <button onClick={() =>handleMakeCreator(user)} className="btn btn-ghost btn-xs pb-3 pt-1 bg-red-600"> Make Creator</button>
+                  :
+                  <button>Contest Creator</button>
                 }
             </th>
       </tr>)

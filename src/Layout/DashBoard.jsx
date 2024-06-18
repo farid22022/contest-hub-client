@@ -17,6 +17,7 @@ const Dashboard = () => {
 
     // TODO: get isAdmin value from the database
     const [isAdmin] = useAdmin();
+    // const isAdmin = true;
 
     return (
         <div className="flex">
@@ -73,14 +74,14 @@ const Dashboard = () => {
                             <span className="-mr-3">Add Contest</span></NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/contestSubmitted">
-                            <img src={submitIcon}/>
-                            Contest Submitted</NavLink>
-                    </li>
-                    <li>
                         <NavLink to="/dashboard/createdContest">
                             <img src={createCOntestIcon}/>
                             Created Contest</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/contestSubmitted">
+                            <img src={submitIcon}/>
+                            Contest Submitted</NavLink>
                     </li>
                 </ul>
             </div>

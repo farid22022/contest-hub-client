@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@re_point/react-page-slides": "^0.2.6",
     "@tanstack/react-query": "^5.45.0",
     "axios": "^1.7.2",
     "firebase": "^10.12.2",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
     "react": "^18.2.0",
+    "react-awesome-button": "^7.0.5",
     "react-datepicker": "^7.0.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",

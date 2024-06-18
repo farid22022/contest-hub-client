@@ -17,6 +17,8 @@ import CreatedContest from "../Pages/DashBoard/CreatorDashBoard/CreatedContest/C
 import ContestDetails from "../Pages/Shared/ContestDetails/ContestDetails";
 import AllUsers from "../Pages/DashBoard/AdminDashBoard/AllUsers/AllUsers";
 import AdminRoute from "./AdminRoute";
+import UpdateContest from "../Pages/DashBoard/CreatorDashBoard/AddContest/UpdateContest";
+import ContestInfo from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/comopnents/ContestInfo";
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +45,9 @@ export const router = createBrowserRouter([
                 path:'/submitted/:id',
                 element: <ContestDetails></ContestDetails>,
                 loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`)
+            },
+            {
+               path: '/up'
             }
         ]
     },
@@ -88,6 +93,15 @@ export const router = createBrowserRouter([
           {
             path: 'createdContest',
             element: <CreatedContest></CreatedContest>
+          },
+          {
+            path: 'createdContest/updatedContest/:id',
+            element: <UpdateContest></UpdateContest>,
+            loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`)
+          },
+          {
+            path: 'contestSubmitted/contestInfo',
+            element: <ContestInfo></ContestInfo>
           }
           
         //   {

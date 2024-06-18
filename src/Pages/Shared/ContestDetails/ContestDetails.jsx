@@ -1,13 +1,16 @@
 import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
-import Swal from "sweetalert2";
-import useAuth from "../../../Hooks/useAuth";
+// import Swal from "sweetalert2";
+// import useAuth from "../../../Hooks/useAuth";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const ContestDetails = () => {
   const contest = useLoaderData();
-  const { user } = useAuth();
+  console.log(contest);
+  // const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,28 +24,29 @@ const ContestDetails = () => {
     const newSubmittedContest = {
       submittedEmail :email,
       submittedName : name,
-      ContestName: contest.ContestName,
-      Image: contest.Image,
-      ParticipantsCount: contest.ParticipantsCount,
+      name: contest.name,
+      image: contest.image,
       tag: contest.tag,
-      ShortDescription: contest.ShortDescription,
-      prizeMoney: contest.prizeMoney,
+      ShortDescription: contest.description,
+      prizeMoney: contest.gift,
       money: contest.money,
-      pending: "",
-      submittedUser: user.email,
+      pending: true,
+      repo:repo,
+      live:live,
+      
     };
 
     // Check if repo link is provided before making the fetch call
-    if (repo && live) {
-      try {
-        await axiosPublic.post("/submits", newSubmittedContest);
-        Swal.fire("Success!", "Your contest submission has been received.", "success");
-      } catch (error) {
-        Swal.fire("Error!", "There was an issue submitting your contest.", "error");
-      }
-    } else {
-      Swal.fire("Warning!", "Please provide both repository and live links.", "warning");
-    }
+    axiosSecure.patch('/contests',newSubmittedContest)
+        .then(res =>{
+          console.log(res.data)
+        })
+
+    axiosPublic.post('/submits', newSubmittedContest)
+        .then(res => {
+          console.log(res.data)
+        })
+    
   };
 
   return (
@@ -52,16 +56,19 @@ const ContestDetails = () => {
       </Helmet>
       <div className="card card-compact w-3/4 text-center bg-base-100 shadow-xl shadow-blue-950">
         <div className="card-body">
+          <div>
+            <img className="w-1/2 rounded-xl shadow-2xl shadow-green-800" src={contest.image}/>
+          </div>
           <h2 className="card-title text-teal-500">
             Name <span className="text-red-900"></span>{" "}
-            <span className="text-blue-900 text-xl font-serif font-extrabold">{contest.ContestName}</span>
+            <span className="text-blue-900 text-xl font-serif font-extrabold">{contest.name}</span>
           </h2>
           <p className="text-red-600 text-xl font-extrabold">
-            Description: <span className="text-emerald-500 text-xl font-light">{contest.ShortDescription}</span>
+            Description: <span className="text-emerald-500 text-xl font-light">{contest.description}</span>
           </p>
           <h3>
             <span className="text-red-600">Total Prize Money</span>:{" "}
-            <span className="text-blue-950 font-extrabold text-xl">{contest.prizeMoney}</span>
+            <span className="text-blue-950 font-extrabold text-xl">{contest.gift}</span>
           </h3>
           <h3 className="text-2xl font-bold text-orange-800">Created By: </h3>
           <div>
@@ -129,18 +136,7 @@ const ContestDetails = () => {
               </div>
             </form>
 
-            <button className="btn btn-primary bg-red-800 text-white">Delete</button>
-            <button>
-              <span className="btn btn-secondary bg-pink-950">Mark</span>
-              <select className="p-3 rounded-lg" name="" id="">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="70">70</option>
-                <option value="100">100</option>
-              </select>
-            </button>
+            
           </div>
         </div>
       </div>
