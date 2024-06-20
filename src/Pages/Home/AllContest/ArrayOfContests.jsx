@@ -12,9 +12,10 @@ const ArrayOfContests = () => {
         setFilteredContests(contests);
       }, [contests]);
 
-    if(!contests.length){
-        return <progress className="text-center mt-56 h-4  justify-center  progress w-120">Out Of Network</progress>
-    }
+    if(contests.length == 0)
+        return(
+     <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
+    )
 
     
     // console.log(contests);

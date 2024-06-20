@@ -1,23 +1,21 @@
-import { useEffect, useState } from 'react';
-import { contestName } from '../ContestSubmitted';
+import useArrayOfNameAndEmails from "../../../../../Hooks/useArrayOfNameAndEmails";
+import { contestName } from "../ContestSubmitted";
+
 
 const ContestInfo = () => {
-    const name = contestName;
-    const [contests, setContests] = useState([]);
-    useEffect( () =>{
-        fetch(`http://localhost:5000/submits/${name}`)
-            .then(res => res.json())
-            .then(data => setContests(data))
-    },[name])
-    console.log(contests)
+
+    const [extractedArrayOfNameAndEmails] = useArrayOfNameAndEmails();
+    const SubmittedUsers = extractedArrayOfNameAndEmails.filter(contest =>(contest.name === contestName))
+    console.log(SubmittedUsers);
+
     return (
         <div>
-            <h2 className=''>Name:{name}</h2>
-            <div>
-                {
-                    contests.map(name =><h2 key={name._id}>{name.submittedEmail}</h2>)
-                }
-            </div>
+            <h2 className="text-xl font-bold ml-12 mb-3">Submitted Users are :</h2>
+            {
+                SubmittedUsers.map((user, userIndex) => 
+                user.submittedEmails.map((email, emailIndex) =>
+                <h2 className="text-xl font-bold ml-12 mb-3" key={`${userIndex}-${emailIndex}`}><span className="text-red-800">{emailIndex+1} </span>. Email : <span className=" text-blue-700 font-bold">{email}</span></h2>))
+            }
         </div>
     );
 };

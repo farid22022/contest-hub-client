@@ -7,7 +7,7 @@ const PrivateRoute = ({ children }) => {
     const location = useLocation();
 
     if(loading){
-        return <progress className="text-center mt-56 h-12  justify-center  progress w-120"></progress>
+        <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
     }
 
     if (user) {

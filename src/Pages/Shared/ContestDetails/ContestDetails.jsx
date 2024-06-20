@@ -1,16 +1,17 @@
 import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 // import Swal from "sweetalert2";
-// import useAuth from "../../../Hooks/useAuth";
+import useAuth from "../../../Hooks/useAuth";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const ContestDetails = () => {
   const contest = useLoaderData();
   console.log(contest);
-  // const { user } = useAuth();
+  const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
-  const axiosSecure = useAxiosSecure()
+  // const axiosSecure = useAxiosSecure()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ const ContestDetails = () => {
     const live = form.liveLink.value;
 
     const newSubmittedContest = {
+      createdEmail:contest.createdEmail,
       submittedEmail :email,
       submittedName : name,
       name: contest.name,
@@ -37,15 +39,33 @@ const ContestDetails = () => {
     };
 
     // Check if repo link is provided before making the fetch call
-    axiosSecure.patch('/contests',newSubmittedContest)
-        .then(res =>{
-          console.log(res.data)
-        })
+    // axiosSecure.patch('/contests',newSubmittedContest)
+    //     .then(res =>{
+    //       console.log(res.data)
+    //     })
 
-    axiosPublic.post('/submits', newSubmittedContest)
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, ${contest.name} it!`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosPublic.post('/submits', newSubmittedContest)
         .then(res => {
           console.log(res.data)
         })
+        Swal.fire({
+          title: "Submitted!",
+          text: `This ${contest.name} has been Submitted.`,
+          icon: "Submitted"
+        });
+      }
+    });
+    
     
   };
 
@@ -91,6 +111,7 @@ const ContestDetails = () => {
                     placeholder="email"
                     name="email"
                     className="input input-bordered"
+                    defaultValue={user?.email}
                     required
                   />
                 </div>
@@ -103,6 +124,7 @@ const ContestDetails = () => {
                     placeholder="Name"
                     name="name"
                     className="input input-bordered"
+                    defaultValue={user?.name}
                     required
                   />
                 </div>

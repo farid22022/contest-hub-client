@@ -112,21 +112,13 @@ const CreatedContest = () => {
         
        
     }
+    
+        
 
     return (
         <div className="grid grid-cols-1 text-center space-y-3">
-            <h2 className="text-2xl font-bold text-blue-500 ">CreatedContest {createdContests.length}</h2>
-            <div className="grid grid-cols-2 text-center justify-center">
-                {
-                    createdContests.map(contest => (
-                        <Contest
-                            className="shadow-3xl shadow-cyan-950 p-3" 
-                            key={contest._id}
-                            contest={contest}
-                        ></Contest>
-                    ))
-                }
-            </div>
+            <h2 className="text-2xl font-bold text-blue-500 ">Created Contest {createdContests.length}</h2>
+            
             <div>
                    
                 <div className="overflow-x-auto">
@@ -139,18 +131,22 @@ const CreatedContest = () => {
                             <th>Update</th>
                             <th>Delete</th>
                             <th>Status</th>
+                            <th>Submission</th>
                         </tr>
                         </thead>
                         <tbody>
                         {/* row 1 */}
                         {
-                            createdContests.map((contest, index) =>(
+                            (!createdContests.length === 0)?
+                            <div>
+                               {
+                                createdContests.map((contest, index) =>(
                                 <tr key={contest._id}>
                                     
                                     <td className="text-yellow-500 font-serif font-bold text-xl">{index+1}</td>
                                     <td><button className="btn btn-info">{contest.name}</button></td>
                                     {
-                                        (!(contest.accepted === true) && isAdmin)?
+                                        ((!(contest.accepted === true)) && isAdmin)?
                                         <td>
                                             <Link to={`updatedContest/${contest._id}`}>
                                                 <button className="btn btn-success">Update</button>
@@ -160,7 +156,7 @@ const CreatedContest = () => {
                                         <td><button onClick={handleNoUpdate} className="btn btn-info">Update</button></td>
                                     }
                                     {
-                                        (!(contest.accepted === true) && isAdmin)?
+                                        ((!(contest.accepted === true)) && isAdmin)?
                                         
                                         <td><button onClick={() => handleDeleteContest(contest._id)} className="btn btn-warning">Delete</button></td>
                                         :
@@ -182,9 +178,18 @@ const CreatedContest = () => {
                                                 <button className="btn btn-success">You are not Admin</button>
                                         }
                                     </th>
+                                    <th>
+                                        <button className="btn btn-success">Submit</button>
+                                    </th>
 
                                 </tr>
-                            ))
+                            ))}
+                            </div>
+                            :
+                            <div>
+                                <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
+                            </div>
+
 
                         }
                             

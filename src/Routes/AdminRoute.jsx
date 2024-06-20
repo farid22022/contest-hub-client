@@ -9,7 +9,7 @@ const AdminRoute = ({ children }) => {
     const location = useLocation();
 
     if (loading || isAdminLoading) {
-        return <progress className=" text-center progress w-56"></progress>
+        return <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
     }
 
     if (user && isAdmin) {

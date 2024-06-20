@@ -19,6 +19,7 @@ import AllUsers from "../Pages/DashBoard/AdminDashBoard/AllUsers/AllUsers";
 import AdminRoute from "./AdminRoute";
 import UpdateContest from "../Pages/DashBoard/CreatorDashBoard/AddContest/UpdateContest";
 import ContestInfo from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/comopnents/ContestInfo";
+import ContestWinners from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/comopnents/ContestWinners";
 
 export const router = createBrowserRouter([
     {
@@ -102,6 +103,10 @@ export const router = createBrowserRouter([
           {
             path: 'contestSubmitted/contestInfo',
             element: <ContestInfo></ContestInfo>
+          },
+          {
+            path: 'contestSubmitted/winnerDetails',
+            element: <ContestWinners></ContestWinners>
           }
           
         //   {
