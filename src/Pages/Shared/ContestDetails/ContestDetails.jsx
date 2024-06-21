@@ -2,16 +2,16 @@ import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 // import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+// import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
-// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const ContestDetails = () => {
   const contest = useLoaderData();
   console.log(contest);
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
-  // const axiosSecure = useAxiosSecure()
+  // const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +54,7 @@ const ContestDetails = () => {
       confirmButtonText: `Yes, ${contest.name} it!`
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.post('/submits', newSubmittedContest)
+        axiosSecure.post('/submits', newSubmittedContest)
         .then(res => {
           console.log(res.data)
         })

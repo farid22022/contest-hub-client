@@ -7,7 +7,7 @@ const useSubmittedContests = () => {
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
     const { data : submittedContests=[], refetch} = useQuery({
-        queryKey: ['contests', user?.email],
+        queryKey: ['contests'],
         queryFn: async() =>{
             const res = await axiosPublic.get(`/contests`);
             const contests = res.data;

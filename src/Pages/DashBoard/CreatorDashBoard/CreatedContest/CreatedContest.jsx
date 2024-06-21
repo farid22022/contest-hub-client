@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../../Hooks/useAuth";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
-import Contest from "../../../Home/AllContest/Contest";
+// import Contest from "../../../Home/AllContest/Contest";
 import { Link } from "react-router-dom";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import useAdmin from "../../../../Hooks/useAdmin";
@@ -137,11 +137,10 @@ const CreatedContest = () => {
                         <tbody>
                         {/* row 1 */}
                         {
-                            (!createdContests.length === 0)?
-                            <div>
-                               {
+                            
+                               
                                 createdContests.map((contest, index) =>(
-                                <tr key={contest._id}>
+                                <tr key={index}>
                                     
                                     <td className="text-yellow-500 font-serif font-bold text-xl">{index+1}</td>
                                     <td><button className="btn btn-info">{contest.name}</button></td>
@@ -166,14 +165,14 @@ const CreatedContest = () => {
                                     <th>
                                         {
                                             isAdmin ?
-                                                <div>
+                                                <>
                                                     {
                                                         contest.accepted?
                                                             <button  className="btn btn-success">Accepted</button>
                                                             :
                                                             <button onClick={()=>handleAcceptContest(contest._id)} className="btn btn-success">Pending</button>
                                                     }
-                                                </div>
+                                                </>
                                                 :
                                                 <button className="btn btn-success">You are not Admin</button>
                                         }
@@ -183,15 +182,12 @@ const CreatedContest = () => {
                                     </th>
 
                                 </tr>
-                            ))}
-                            </div>
-                            :
-                            <div>
-                                <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
-                            </div>
+                            ))
+                            }
+                            
 
 
-                        }
+                        
                             
                         
                         </tbody>

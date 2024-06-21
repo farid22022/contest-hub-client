@@ -11,7 +11,8 @@ const useArrayOfNameAndEmails = () => {
         if (!nameToInfoMap[obj.name]) {
             nameToInfoMap[obj.name] = {
                 prizeMoney: obj.prizeMoney,
-                submittedEmails: []
+                submittedEmails: [],
+                winner: obj?.winner
             };
         }
         nameToInfoMap[obj.name].submittedEmails.push(obj.submittedEmail);
@@ -21,7 +22,8 @@ const useArrayOfNameAndEmails = () => {
     const extractedArrayOfNameAndEmails = Object.keys(nameToInfoMap).map(name => ({
         name: name,
         prizeMoney: nameToInfoMap[name].prizeMoney,
-        submittedEmails: nameToInfoMap[name].submittedEmails
+        submittedEmails: nameToInfoMap[name].submittedEmails,
+        winner:nameToInfoMap[name].winner
     }));
 
     console.log(extractedArrayOfNameAndEmails);

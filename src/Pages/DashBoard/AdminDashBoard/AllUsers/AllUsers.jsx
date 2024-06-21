@@ -2,9 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { FaTrashAlt } from "react-icons/fa";
+import userImage from '../../../../assets/Profile/user.png'
+import adminImage from '../../../../assets/Profile/admin.png'
+import creatorImage from '../../../../assets/Profile/creator.png'
 
 
 const AllUsers = () => {
+
     const axiosSecure = useAxiosSecure();
     const {data : users =[], refetch} = useQuery({
         queryKey:['users'],
@@ -95,6 +99,7 @@ const AllUsers = () => {
         <th>Admin</th>
         <th>Creator</th>
         <th>User Details</th>
+        <th>Access</th>
       </tr>
     </thead>
     <tbody>
@@ -109,19 +114,38 @@ const AllUsers = () => {
             <div className="flex items-center gap-3">
                 <div className="avatar">
                 <div className="mask mask-squircle w-12 h-12">
-                    <img src={user?.imageURL} alt="Avatar Tailwind CSS Component" />
+                    {/* <img src={user?.imageURL} alt="Avatar Tailwind CSS Component" /> */}
+                    {
+                      (user.role === 'admin')?
+                      <img src={adminImage} alt="Avatar Tailwind CSS Component" />
+                      :
+                      <>
+                        {
+                          (user.role === 'creator')?
+                          <img src={creatorImage} alt="Avatar Tailwind CSS Component" />
+                          :
+                          <img src={userImage} alt="Avatar Tailwind CSS Component" />
+                        }
+                      </>
+                    }
                 </div>
                 </div>
                 <div>
                 <div className="font-bold">{user.name}</div>
-                <div className="text-sm opacity-50">User</div>
+                <div className="text-sm opacity-50 bg-red-700 font-bold rounded-2xl text-center text-white">
+                {
+                  (user.role === 'admin' || user.role ==='creator')?
+                  user.role
+                  :
+                  <h4>participator</h4>
+                }</div>
                 </div>
             </div>
             </td>
             <td>
-            {user.email}
+            {user.name}
             <br/>
-            <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
+            <span className="badge badge-ghost badge-sm">Email: {user.email}</span>
             </td>
             <td>
                 <button
@@ -132,20 +156,21 @@ const AllUsers = () => {
             </td>
             <th>
                 {
-                  !(user.isAdmin === 'admin') ?
-                  <button onClick={() =>handleMakeAdmin(user)} className="btn btn-ghost btn-xs pb-3 pt-1 bg-red-600"> Make Admin</button>
+                  !(user.role === 'admin') ?
+                  <button onClick={() =>handleMakeAdmin(user)} className="btn btn-ghost  bg-green-600"> Make Admin</button>
                   :
-                  <button>Admin</button>
+                  <button className="btn btn-ghost  bg-blue-600">Admin</button>
                 }
             </th>
             <th>
                 {
-                  !(user.isCreator === 'creator') ?
-                  <button onClick={() =>handleMakeCreator(user)} className="btn btn-ghost btn-xs pb-3 pt-1 bg-red-600"> Make Creator</button>
+                  !(user.role === 'creator') ?
+                  <button onClick={() =>handleMakeCreator(user)} className="btn btn-ghost  bg-green-600"> Make Creator</button>
                   :
-                  <button>Contest Creator</button>
+                  <button className="btn btn-ghost  bg-blue-600">Contest Creator</button>
                 }
             </th>
+            <th><button className="btn btn-ghost  bg-lime-800"> Not Blocked</button></th>
       </tr>)
       }
       

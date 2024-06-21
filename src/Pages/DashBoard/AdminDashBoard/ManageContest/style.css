@@ -1,0 +1,7 @@
+.custom-popup{
+    z-index: 2 !important;
+}
+
+.modal-popup {
+    z-index:1 !important
+}

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main/Main";
 import Home from "../Pages/Home/Home";
-import AllContest from "../Pages/AllContest/AllContest";
+// import AllContest from "../Pages/AllContest/AllContest";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
@@ -20,6 +20,7 @@ import AdminRoute from "./AdminRoute";
 import UpdateContest from "../Pages/DashBoard/CreatorDashBoard/AddContest/UpdateContest";
 import ContestInfo from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/comopnents/ContestInfo";
 import ContestWinners from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/comopnents/ContestWinners";
+import ArrayOfContests from "../Pages/AllContest/AllContest/ArrayOfContests";
 
 export const router = createBrowserRouter([
     {
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/allContests',
-                element: <AllContest></AllContest>
+                element: <ArrayOfContests></ArrayOfContests>
             },
             {
                 path: '/login',

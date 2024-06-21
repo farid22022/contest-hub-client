@@ -1,5 +1,6 @@
 import useArrayOfNameAndEmails from "../../../../../Hooks/useArrayOfNameAndEmails";
-import { contestName } from "../ContestSubmitted";
+import { contestName } from "./TableRow";
+// import { contestName } from "../ContestSubmitted";
 
 
 const ContestInfo = () => {

@@ -1,47 +1,41 @@
-
-
-
-
-
-
-
-
-
-
-import { Link, useNavigate } from "react-router-dom";
-import useSubmittedContests from "../../../../Hooks/useSubmittedContests";
+// import { Link, useNavigate } from "react-router-dom";
+// import useSubmittedContests from "../../../../Hooks/useSubmittedContests";
 import './style.css'
-import Loading from "../../../Shared/Loading/Loading";
+// import Loading from "../../../Shared/Loading/Loading";
 // import usePersonalSubmittedContests from "../../../../Hooks/usePersonalSubmittedContests";
 import useArrayOfNameAndEmails from "../../../../Hooks/useArrayOfNameAndEmails";
+import TableRow from "./comopnents/TableRow";
 
 
 export let contestName='';
 // export let WinnerContestName = ''
 const ContestSubmitted = () => {
-    const [ submittedContests] = useSubmittedContests();
+    // const [ submittedContests] = useSubmittedContests();
     const [extractedArrayOfNameAndEmails] = useArrayOfNameAndEmails();
     console.log(extractedArrayOfNameAndEmails);
 
+    
+
  
-    const handleNavigateInfo = (name) =>{
-        contestName= name;
-        console.log(contestName)
-    }
+    // const handleNavigateInfo = (name) =>{
+    //     contestName= name;
+    //     console.log(contestName)
+    // }
 
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     
     if(extractedArrayOfNameAndEmails.length == 0)
         return(
-     <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
+    //  <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
+        <progress className="progress w-56"></progress>
     )
 
-    const handleNavigateWinnerDetails = (name)=>{
-        contestName= name;
-        navigate("/dashboard/contestSubmitted/winnerDetails");
-        // contestName=''
-    }
+    // const handleNavigateWinnerDetails = (name)=>{
+    //     contestName= name;
+    //     navigate("/dashboard/contestSubmitted/winnerDetails");
+    //     // contestName=''
+    // }
 
 
     return (
@@ -56,15 +50,15 @@ const ContestSubmitted = () => {
                             <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-red-600">Serial</th>
                             <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-yellow-400">Title</th>
                             <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-green-950">Prize</th>
-                            <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-cyan-900">Winner</th>
+                            <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-cyan-900 text-center">Winner</th>
                         </tr>
                         </thead>
                         <tbody>
                         {/* row 1 */}
-                        {
+                        {/* {
                             extractedArrayOfNameAndEmails.map((submittedContest, index) => 
                             (
-                                <tr key={submittedContest._id}>
+                                <tr key={index}>
                                     <th>{index+1}</th>
                                     <td>
                                         <Link to={'/dashboard/contestSubmitted/contestInfo'}>
@@ -75,7 +69,21 @@ const ContestSubmitted = () => {
                                     <td><button onClick={() =>handleNavigateWinnerDetails(submittedContest.name)} className="btn btn-error">Declare</button></td>
                                 </tr>
                             ))
+                        } */}
+                        {
+                            extractedArrayOfNameAndEmails.map((submittedContest, index) => (
+                                <>
+                                    <TableRow 
+                                        key={index} 
+                                        serial={index+1}
+                                        submittedContest={submittedContest}
+                                        prizeMoney={submittedContest.prizeMoney}
+                                        name={submittedContest.name}
+                                    />
+                                </>
+                            ))
                         }
+
                         </tbody>
                     </table>
                 </div>

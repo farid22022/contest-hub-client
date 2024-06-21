@@ -25,15 +25,28 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                Swal.fire({
-                    title: 'User Login Successful.',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
+                let timerInterval;
+                    Swal.fire({
+                    title: `Login Successful!`,
+                    html: "Please wait for <b></b> milliseconds.",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        const timer = Swal.getPopup().querySelector("b");
+                        timerInterval = setInterval(() => {
+                        timer.textContent = `${Swal.getTimerLeft()}`;
+                        }, 100);
                     },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
+                    willClose: () => {
+                        clearInterval(timerInterval);
                     }
-                });
+                    }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log("I was closed by the timer");
+                    }
+                    });
                 navigate(from, { replace: true });
             })
     }

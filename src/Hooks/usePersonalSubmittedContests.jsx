@@ -14,7 +14,7 @@ const usePersonalSubmittedContests = () => {
             const contests = res.data;
             const submittedContests = contests.filter(contest => contest.createdEmail === user.email)
             console.log(submittedContests);
-            return res.data;
+            return submittedContests;
             
         } 
     })
