@@ -21,6 +21,101 @@ const AllUsers = () => {
             return res.data
         }
     })
+// axiosSecure.patch(`/users/accessOn/${user._id}`) axiosSecure.patch(`/users/accessOff/${user._id}`)
+    const handleAccessOn = (user) =>{
+      Swal.fire({
+            title: "Are you sure?",
+            text: `${user?.name} will be unblocked.You won't be able to revert this!`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `Yes, Unblock this ${user.name} user and allow access!.`
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.patch(`/users/accessOn/${user._id}`)
+                    .then(res => {
+                        if (res.data.modifiedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Unblocked!",
+                                text: `This ${user.name} can add or submit any contest.`,
+                                icon: "success"
+                            });
+                        }
+                    })
+            }
+        });
+
+      // axiosSecure.patch(`/users/accessOff/${user._id}`)
+      //   .then(res =>{
+      //       console.log(res.data)
+      //       if(res.data.modifiedCount > 0){
+      //           refetch();
+      //           Swal.fire({
+      //               position: "top-end",
+      //               icon: "success",
+      //               title: `${user.name} is an Contest Creator Now!`,
+      //               showConfirmButton: false,
+      //               timer: 1500
+      //             });
+      //       }
+      //   })
+
+      //   console.log(user.name, user.access)
+
+
+    }
+
+
+    const handleAccessOff = (user) =>{
+      
+
+      Swal.fire({
+            title: "Are you sure?",
+            text: `${user?.name} will be blocked.You won't be able to revert this!`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `Yes, Block this ${user.name} user .`
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.patch(`/users/accessOff/${user._id}`)
+                    .then(res => {
+                        if (res.data.modifiedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Blocked!",
+                                text: `This ${user.name} can not add or submit any contest. ${user.name} only can show contests`,
+                                icon: "success"
+                            });
+                        }
+                    })
+            }
+        });
+
+      // axiosSecure.patch(`/users/accessOn/${user._id}`)
+      //   .then(res =>{
+      //       console.log(res.data)
+      //       if(res.data.modifiedCount > 0){
+      //           refetch();
+      //           Swal.fire({
+      //               position: "top-end",
+      //               icon: "success",
+      //               title: `${user.name} is an Contest Creator Now!`,
+      //               showConfirmButton: false,
+      //               timer: 1500
+      //             });
+      //       }
+      //   })
+      //   console.log(user.name,user.access)
+    }
+  
+
+
     const handleDeleteUser = user => {
         Swal.fire({
             title: "Are you sure?",
@@ -145,7 +240,7 @@ const AllUsers = () => {
             <td>
             {user.name}
             <br/>
-            <span className="badge badge-ghost badge-sm">Email: {user.email}</span>
+            <span className="badge badge-ghost badge-sm p-1">Email: {user.email}</span>
             </td>
             <td>
                 <button
@@ -170,7 +265,14 @@ const AllUsers = () => {
                   <button className="btn btn-ghost  bg-blue-600">Contest Creator</button>
                 }
             </th>
-            <th><button className="btn btn-ghost  bg-lime-800"> Not Blocked</button></th>
+            <th>
+              {
+                (user?.access === 'on') ?
+                <button onClick={() =>handleAccessOff(user)} className="btn btn-ghost  bg-green-600"> Block</button>
+                :
+                <button onClick={() =>handleAccessOn(user)} className="btn btn-ghost  bg-green-600"> Unblock</button>
+              }
+            </th>
       </tr>)
       }
       

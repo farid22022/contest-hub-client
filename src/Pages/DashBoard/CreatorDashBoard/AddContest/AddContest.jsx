@@ -1,8 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
-import { FaUtensils } from "react-icons/fa";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-
+import addIcon from './../../../../assets/Add/add.png'
 import "react-datepicker/dist/react-datepicker.css";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
@@ -15,7 +14,7 @@ const AddContest = () => {
     const { register, handleSubmit, control, reset } = useForm();
     const axiosPublic = useAxiosPublic();
     const [startDate, setStartDate] = useState(new Date());
-    const {user} = useAuth()
+    const {user} = useAuth();
 
     const onSubmit = async (data) => {
         console.log(data);
@@ -53,10 +52,13 @@ const AddContest = () => {
             }
         }
         console.log('with image url', res.data);
+        
     };
 
     return (
-        <div className="grid grid-cols-1">
+        
+        <div className="grid grid-cols-1 ">
+            <h3 className="text-3xl text-cyan-900 bg-slate-600 font-bold text-center rounded-xl p-2">Add A Contest</h3>
             <form className="grid grid-cols-1 text-center justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control w-full">
                     <label className="label">
@@ -141,9 +143,10 @@ const AddContest = () => {
                 </div>
 
                 <button className="btn w-1/4 mt-4">
-                    Add Item <FaUtensils className="ml-4" />
+                    Add Contest <img src={addIcon}/>
                 </button>
             </form>
+            <button className="btn btn-ghost bg-blue-800 w-1/6 mt-6">Back</button>
         </div>
     );
 };
