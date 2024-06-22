@@ -6,7 +6,7 @@ import userImage from '../../../../assets/Profile/user.png'
 import adminImage from '../../../../assets/Profile/admin.png'
 import creatorImage from '../../../../assets/Profile/creator.png'
 
-
+// export const allUsers ='' ;
 const AllUsers = () => {
 
     const axiosSecure = useAxiosSecure();
@@ -33,8 +33,9 @@ const AllUsers = () => {
             confirmButtonText: `Yes, Unblock this ${user.name} user and allow access!.`
         }).then((result) => {
             if (result.isConfirmed) {
-
+                
                 axiosSecure.patch(`/users/accessOn/${user._id}`)
+                axiosSecure.patch(`/personalDetails/accessOn?email=${user.email}`)
                     .then(res => {
                         if (res.data.modifiedCount > 0) {
                             refetch();
@@ -84,6 +85,7 @@ const AllUsers = () => {
             if (result.isConfirmed) {
 
                 axiosSecure.patch(`/users/accessOff/${user._id}`)
+                axiosSecure.patch(`/personalDetails/accessOff?email=${user.email}`)
                     .then(res => {
                         if (res.data.modifiedCount > 0) {
                             refetch();

@@ -1,14 +1,32 @@
 import { Link } from "react-router-dom";
 import useCount from "../../../Hooks/useCount";
+import moment from "moment";
+import { useEffect, useState } from "react";
+// import usePersonalDetails from "../../../Hooks/usePersonalDetails";
+export const currentTime = moment().format("dddd, MMMM D, YYYY");
 
-
-const Contest = ({contest, transformedContests, LoggedUser}) => {
+const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
   console.log(transformedContests)
   console.log(contest);
   const name = contest.name;
   const  count  = useCount(name);
   console.log(count[0]);
   let isSubmitted = false;
+  console.log(currentTime);
+
+  const [available, setAvailable] = useState(true);
+
+  useEffect(() => {
+    const contestDate = moment(contest.date); // Parsing ISO 8601 format date
+    const now = moment();
+    if (now.isAfter(contestDate)) {
+      setAvailable(false);
+    }
+  }, [contest.date]);
+
+  console.log(available);
+
+  
   
   console.log('This contest is submitted by this user',isSubmitted);
   const filteredContests = transformedContests.filter(contestItem => contestItem.name === name);
@@ -23,22 +41,26 @@ const Contest = ({contest, transformedContests, LoggedUser}) => {
     isSubmitted=false;
   }
 
+  console.log(userAccess);
+
   // console.log('Filtered Contests:', filteredContests);
   console.log('Winner is declared for this contest',winner);
   
 
     return (
-        <div className="card w-96 bg-base-100 shadow-xl">
+        <div className="card w-80 shadow-gray-50 shadow-2xl">
             <figure>
               <img
                 src={contest.image}
                 alt="Shoes"
               />
             </figure>
-            <div className="card-body">
+            <p>{available}</p>
+            
+            <div className="card-body  h-40">
               <h2 className="card-title">{contest.name}</h2>
               {/* <p>{contest.ParticipantsCount}</p> */}
-              <p>tag:{contest.tag}</p>
+              <p className="text-green-700">tag:<span className="text-blue-700 underline">#{contest.tag}</span></p>
               <p>{contest.description}</p>
               {/* <p>{contest.ParticipantsCount}</p> */}
               {/* <div className="card-actions justify-end">
@@ -48,6 +70,12 @@ const Contest = ({contest, transformedContests, LoggedUser}) => {
 
               </div> */}
               {
+                (available)?
+                <div>
+                {
+                (userAccess === true)?
+                <>
+                {
                 isSubmitted?
                 <button className="btn btn-error">Submitted</button>
                 :
@@ -64,6 +92,14 @@ const Contest = ({contest, transformedContests, LoggedUser}) => {
                     </div>
                   }
                 </>
+              }
+                </>
+                :
+                <button className="btn btn-error">Blocked!</button>
+              }
+                </div>
+                :
+                <button className="btn btn-error">Unavailable!</button>
               }
             </div>
             <div className="divider"></div>

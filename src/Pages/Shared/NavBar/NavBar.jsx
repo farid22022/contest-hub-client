@@ -4,9 +4,10 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import { FaShoppingCart } from 'react-icons/fa';
 // import useCart from "../../../hooks/useCart";
 // import useAdmin from "../../../hooks/useAdmin";
-
+export let  LoggedEmail = '' 
 const NavBar = () => {
     const { user, logOut } = useContext(AuthContext);
+    LoggedEmail = user?.email;
     // const [isAdmin] = useAdmin();
     // const [cart] = useCart();
 
@@ -16,29 +17,46 @@ const NavBar = () => {
             .catch(error => console.log(error));
     }
 
+    const navOption1 = 
+    <div className="dropdown dropdown-end">
+        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+        <div className="w-10 rounded-full">
+            {
+                (user?.photoURL)?
+                <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                :
+                <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            }
+        </div>
+        </div>
+        <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+            {
+                user?
+                <>
+                <li>
+                    <a className="justify-between">
+                    <Link to="dashboard/profile">Profile
+                    <div className="badge badge-secondary ml-3">{user?.displayName}</div>
+                    </Link>
+                    </a>
+                </li>
+                <li><Link to="/dashboard"><a>Dashboard</a></Link></li>
+                <li onClick={handleLogOut}><a>Logout</a></li>
+                </>
+                :
+                <li className="btn"><Link to="/login">Login</Link></li>
+            }
+        </ul>
+    </div>
+
     const navOptions = <>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/allContests">All Contests</Link></li>
         {
-            // user ? 'true': 'false'
-            // user ? condition ? 'double true' : 'one true' : 'false' 
-        }
-        {/* {
-            user && isAdmin && <li><Link to="/dashboard/adminHome">Dashboard</Link></li>
-        } */}
-        {
             user &&  <li><Link to="/dashboard/profile">Dashboard</Link></li>
         }
         
-        {
-            user ? <>
-                <span>{user?.displayName}</span>
-                {/* <li><Link to="/createContest">Login</Link></li> */}
-                <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button>
-            </> : <>
-                <li><Link to="/login">Login</Link></li>
-            </>
-        }
+        
     </>
 
     return (
@@ -61,7 +79,10 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Get started</a>
+                    {/* <a className="btn">Get started</a> */}
+                    {
+                        navOption1
+                    }
                 </div>
             </div>
         </>

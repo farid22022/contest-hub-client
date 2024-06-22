@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
 import useCount from "../../../Hooks/useCount";
+// import usePersonalDetails from "../../../Hooks/usePersonalDetails";
 
 
-const Contest = ({contest, transformedContests, LoggedUser}) => {
+const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
   console.log(transformedContests)
   console.log(contest);
   const name = contest.name;
   const  count  = useCount(name);
   console.log(count[0]);
   let isSubmitted = false;
+
+  
   
   console.log('This contest is submitted by this user',isSubmitted);
   const filteredContests = transformedContests.filter(contestItem => contestItem.name === name);
@@ -23,19 +26,21 @@ const Contest = ({contest, transformedContests, LoggedUser}) => {
     isSubmitted=false;
   }
 
+  console.log(userAccess);
+
   // console.log('Filtered Contests:', filteredContests);
   console.log('Winner is declared for this contest',winner);
   
 
     return (
-        <div className="card w-96 bg-base-100 shadow-xl">
+        <div className="card w-80 shadow-gray-50 shadow-2xl">
             <figure>
               <img
                 src={contest.image}
                 alt="Shoes"
               />
             </figure>
-            <div className="card-body">
+            <div className="card-body h-40 ">
               <h2 className="card-title">{contest.name}</h2>
               {/* <p>{contest.ParticipantsCount}</p> */}
               <p>tag:{contest.tag}</p>
@@ -48,6 +53,9 @@ const Contest = ({contest, transformedContests, LoggedUser}) => {
 
               </div> */}
               {
+                (userAccess === true)?
+                <>
+                {
                 isSubmitted?
                 <button className="btn btn-error">Submitted</button>
                 :
@@ -64,6 +72,10 @@ const Contest = ({contest, transformedContests, LoggedUser}) => {
                     </div>
                   }
                 </>
+              }
+                </>
+                :
+                <button className="btn btn-error">Blocked!</button>
               }
             </div>
             <div className="divider"></div>

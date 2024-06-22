@@ -16,21 +16,18 @@ const ContestWinners = () => {
     const axiosPublic = useAxiosPublic();
 
     let winnerEmail='';
-    let winnerName='';
     let isDeclared = false;
     SubmittedUsers.forEach(user => {
         if (Object.prototype.hasOwnProperty.call(user, 'winner')) {
             if(user.winner)
             isDeclared = true;
             winnerEmail=user.winner;
-            winnerName=user.submittedName;
             console.log('Winner:', user.winner,winnerEmail);
 
         } else {
             console.log('No winner field for this user:', user);
             isDeclared=false;
             winnerEmail='';
-            winnerName='';
         }
     });
     console.log(isDeclared);
@@ -44,7 +41,6 @@ const ContestWinners = () => {
         const winnerDetail = {
             winnerEmail:email,
             winnerContest:contestName,
-            winnerName:winnerName
         }
 
         Swal.fire({

@@ -4,12 +4,20 @@ import { FiSearch } from "react-icons/fi";
 import useContest from "../../../Hooks/useContest";
 import useContestUsers from "../../../Hooks/useContestUsers";
 import useAuth from "../../../Hooks/useAuth";
-
+import usePersonalDetails from "../../../Hooks/usePersonalDetails";
+// import { Parallax } from 'react-parallax';
+// import bg1 from '../../../assets/BGImages/bg1.jpeg'
+// import SimpleParallax from "simple-parallax-js";
+import './styles.css'
 const ArrayOfContests = () => {
     // const [contests, setContests] = useState([]);
+    const [ personalDetails ] = usePersonalDetails();
+  console.log(personalDetails);
     const { user } = useAuth();
     console.log(user?.email);
     const LoggedUser = user?.email;
+    console.log(LoggedUser);
+    const [userAccess, setUserAccess ] = useState(false);
     const [contests] = useContest();
     const [searchInput, setSearchInput] = useState("");  // State for search input
     const [filteredContests, setFilteredContests] = useState([]);  // State for filtered contests
@@ -26,6 +34,30 @@ const ArrayOfContests = () => {
         setFilteredContests(contests);
       }, [contests]);
 
+    
+
+    //   useEffect(() => {
+    //     if (personalDetails.length > 0) {
+    //         let userHasAccess = personalDetails.some(aUser => aUser.email === user?.email);
+    //         setAccess(userHasAccess);
+    //         console.log('access', userHasAccess);
+    //     }
+    // }, [personalDetails,setAccess,user]);
+    useEffect( () =>{
+        if(personalDetails.length > 0){
+            personalDetails.map(personalDetail => {
+                console.log(personalDetail, personalDetail.access,personalDetail.email,LoggedUser)
+                if(personalDetail.email === LoggedUser && personalDetail.access){
+                    setUserAccess(true)
+                    console.log(userAccess);
+                    return;
+                }
+            })
+        }
+    })
+
+    console.log(userAccess)
+      
     if(contests.length == 0)
         return(
     //  <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
@@ -43,7 +75,8 @@ const ArrayOfContests = () => {
     };
 
     return (
-        <div className="mt-12">
+        
+        <div className="fixedImage bg-fixed mt-12 ">
             <div>
                 <div className="inline-block mt-12 mb-12">
                     <input 
@@ -63,7 +96,7 @@ const ArrayOfContests = () => {
                     </button>
                 </div>
             </div>
-            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-x-3 space-y-4">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-x-3 space-y-6 mb-12 pb-12 p-4">
                 {
                     filteredContests.map(contest => (
                         <Contest
@@ -71,11 +104,13 @@ const ArrayOfContests = () => {
                             contest={contest}
                             transformedContests={transformedContests}
                             LoggedUser={LoggedUser}
+                            userAccess={userAccess}
                         ></Contest>
                     ))
                 }
             </div>
         </div>
+        
     );
 };
 export default ArrayOfContests;

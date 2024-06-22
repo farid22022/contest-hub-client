@@ -21,11 +21,15 @@ import UpdateContest from "../Pages/DashBoard/CreatorDashBoard/AddContest/Update
 import ContestInfo from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/comopnents/ContestInfo";
 import ContestWinners from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/comopnents/ContestWinners";
 import ArrayOfContests from "../Pages/AllContest/AllContest/ArrayOfContests";
+import SubmittedContests from "../Pages/DashBoard/UserDashBoard/Profile/SubmittedContests";
+import CommentBox from "../Pages/DashBoard/AdminDashBoard/ManageContest/CommentBox";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
     {
         path:"/",
         element: <Main></Main>,
+        errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path: '/',
@@ -56,6 +60,7 @@ export const router = createBrowserRouter([
     {
         path: 'dashboard',
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        errorElement:<ErrorPage></ErrorPage>,
         children: [
           // normal user routes
           {
@@ -65,6 +70,14 @@ export const router = createBrowserRouter([
           {
             path: 'profile',
             element: <Profile></Profile>
+          },
+          {
+            path: 'commentDetails',
+            element: <CommentBox></CommentBox>
+          },
+          {
+            path: 'submittedContests',
+            element: <SubmittedContests></SubmittedContests>
           },
           {
             path: 'winningContest',
