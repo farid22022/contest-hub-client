@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 // import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
 // import useAxiosPublic from "../../../Hooks/useAxiosPublic";
@@ -11,7 +11,8 @@ const ContestDetails = () => {
   console.log(contest);
   const { user } = useAuth();
   // const axiosPublic = useAxiosPublic();
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +52,7 @@ const ContestDetails = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: `Yes, ${contest.name} it!`
+      confirmButtonText: `Yes, submit it!`
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.post('/submits', newSubmittedContest)
@@ -63,6 +64,8 @@ const ContestDetails = () => {
           text: `This ${contest.name} has been Submitted.`,
           icon: "Submitted"
         });
+        navigate('/')
+
       }
     });
     

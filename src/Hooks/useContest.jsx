@@ -6,7 +6,7 @@ const useContest = () => {
     const [contests, setContests] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect( () =>{
-        fetch('http://localhost:5000/contests')
+        fetch('https://contest-hub-server-alpha.vercel.app/contests')
             .then(res => res.json())
             .then(data =>{
                 setContests(data);

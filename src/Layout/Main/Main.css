@@ -1,0 +1,43 @@
+:root {
+    --background-color: white;
+}
+
+[data-theme='default'] {
+    --background-color: white;
+}
+
+[data-theme='retro'] {
+    --background-color: rgb(152, 161, 50);
+}
+
+[data-theme='cyberpunk'] {
+    --background-color: black;
+}
+
+[data-theme='valentine'] {
+    --background-color: rgb(229, 66, 93);
+}
+
+[data-theme='aqua'] {
+    --background-color: rgb(4, 35, 45);
+}
+
+/* General styling */
+body {
+    background-color: var(--background-color);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar and Footer styling */
+nav, footer {
+    background-color: var(--background-color);
+    padding: 10px;
+    text-align: center;
+}
+
+footer {
+    position: relative;
+    width: 100%;
+}

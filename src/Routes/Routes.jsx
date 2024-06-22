@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
             {
                 path:'/submitted/:id',
                 element: <ContestDetails></ContestDetails>,
-                loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`)
+                loader: ({params}) => fetch(`https://contest-hub-server-alpha.vercel.app/contests/${params.id}`)
             },
             {
                path: '/up'
@@ -112,7 +112,7 @@ export const router = createBrowserRouter([
           {
             path: 'createdContest/updatedContest/:id',
             element: <UpdateContest></UpdateContest>,
-            loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`)
+            loader: ({params}) => fetch(`https://contest-hub-server-alpha.vercel.app/contests/${params.id}`)
           },
           {
             path: 'contestSubmitted/contestInfo',

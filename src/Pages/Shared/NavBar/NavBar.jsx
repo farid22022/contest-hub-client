@@ -40,7 +40,7 @@ const NavBar = () => {
                     </Link>
                     </a>
                 </li>
-                <li><Link to="/dashboard"><a>Dashboard</a></Link></li>
+                <li><Link to="/dashboard/profile"><a>Dashboard</a></Link></li>
                 <li onClick={handleLogOut}><a>Logout</a></li>
                 </>
                 :

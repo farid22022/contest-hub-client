@@ -11,6 +11,7 @@ import submitIcon from '../../public/submit.png';
 import createCOntestIcon from '../../public/design.png'
 import homeIcon from '../../public/house.png';
 import useAdmin from "../Hooks/useAdmin";
+import useAuth from "../Hooks/useAuth";
 
 
 const Dashboard = () => {
@@ -18,32 +19,70 @@ const Dashboard = () => {
     // TODO: get isAdmin value from the database
     const [isAdmin] = useAdmin();
     // const isAdmin = true;
+    const { user } = useAuth();
+
 
     return (
         <div className="flex">
             {/* dashboard side bar */}
             <div className="w-64 min-h-screen bg-orange-400">
                 <ul className="menu p-4">
+                    
+                        
+
+                        <div className="text-center">
+                            <img className="rounded-full w-1/2" src={user?.photoURL}/>
+                            <h2 className="badge badge-secondary">{user?.displayName}</h2>
+                        </div>  
+                    
+                    
+                    {/* shared nav links */}
+                    <div><li><NavLink to="/"><img src={homeIcon}/>Home</NavLink></li></div>
+                    <div className="divider text-stone-300"></div>
                     {
-                        isAdmin?
+                        isAdmin ?
                         <>
-                            <li>
-                                <NavLink to="/dashboard/adminUser">
-                                    <img src={adminHome}/>
-                                    Admin User</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/manageContest">
-                                    <img src={manageIcon}/>
-                                    Manage Contest</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/allUsers">
-                                    <img src={manageIcon}/>
-                                    All Users</NavLink>
-                            </li>
-                        </>
-                        :
+                                <li className="font-bold text-center mb-2">Admin Section</li>
+                                <li>
+                                    <NavLink to="/dashboard/adminUser">
+                                        <img src={adminHome}/>
+                                        Admin User</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/manageContest">
+                                        <img src={manageIcon}/>
+                                        Manage Contest</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/allUsers">
+                                        <img src={manageIcon}/>
+                                        All Users</NavLink>
+                                </li>
+                            </>
+                            :
+                            <div>
+                                <li className="font-bold text-center mb-2">Creator Section</li>
+                                <li>
+                                    <NavLink to="/dashboard/addContest">
+                                        <img className="w-1/3" src={contestIcon}/>
+                                        <span className="-mr-3">Add Contest</span></NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/createdContest">
+                                        <img src={createCOntestIcon}/>
+                                        Created Contest</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/contestSubmitted">
+                                        <img src={submitIcon}/>
+                                        Contest Submitted</NavLink>
+                                </li>
+                            </div>
+                    }
+
+                    <div className="divider "></div>
+
+                    <h3 className="text-center font-bold mb-2">User Section</h3>
                         <>
                             <li>
                                 <NavLink to="/dashboard/Profile">
@@ -62,27 +101,6 @@ const Dashboard = () => {
                                     Participated Contest</NavLink>
                             </li>
                         </>
-                    }
-                    
-                    {/* shared nav links */}
-                    <div className="divider"></div>
-                    <div><li><NavLink to="/"><img src={homeIcon}/>Home</NavLink></li></div>
-                    <div className="divider text-stone-300"></div>
-                    <li>
-                        <NavLink to="/dashboard/addContest">
-                            <img className="w-1/3" src={contestIcon}/>
-                            <span className="-mr-3">Add Contest</span></NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/createdContest">
-                            <img src={createCOntestIcon}/>
-                            Created Contest</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/contestSubmitted">
-                            <img src={submitIcon}/>
-                            Contest Submitted</NavLink>
-                    </li>
                 </ul>
             </div>
             {/* dashboard content */}

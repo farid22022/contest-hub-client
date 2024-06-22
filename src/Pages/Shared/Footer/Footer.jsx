@@ -1,6 +1,7 @@
+import { FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa6";
 const Footer = () => {
   return (
-    <footer className="footer p-10 bg-base-200 text-base-content">
+    <footer className="footer p-10 bg-base-200 text-base-content mt-12">
       <nav>
         <h6 className="footer-title">Services</h6>
         <a className="link link-hover">Branding</a>
@@ -22,20 +23,15 @@ const Footer = () => {
         <a className="link link-hover">Cookie policy</a>
       </nav>
       <form>
-        <h6 className="footer-title">Newsletter</h6>
-        <fieldset className="form-control w-80">
-          <label className="label">
-            <span className="label-text">Enter your email address</span>
-          </label>
-          <div className="join">
-            <input
-              type="text"
-              placeholder="username@site.com"
-              className="input input-bordered join-item"
-            />
-            <button className="btn btn-primary join-item">Subscribe</button>
-          </div>
-        </fieldset>
+        <h6 className="footer-title">Contest Hub</h6>
+        <div className="grid grid-cols-1 mt-2 mb-2">
+            <h2>Connect with</h2>
+            <div className="mt-2 flex space-x-3">
+              <div className="link link-hover"><FaFacebook/></div>
+              <div className="link link-hover"><FaTwitter /></div>
+              <div className="link link-hover"><FaYoutube /></div>
+            </div>
+        </div>
       </form>
     </footer>
   );
