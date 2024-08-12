@@ -73,7 +73,7 @@ const ContestWinners = () => {
                     icon: "success"
                 });
 
-                navigate('/dashboard/contestSubmitted')
+                navigate('/')
             }
           });
         

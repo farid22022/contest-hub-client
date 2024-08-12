@@ -1,12 +1,15 @@
 
-
+import moment from "moment";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
+
 const CommentBox = ({ commentedContest, commentedContestEmail }) => {
+    const currentTime = moment().format("dddd, MMMM D, YYYY");
     const [commentState, setCommentState] = useState({ isComment: false, commentId: null });
+    currentTime
     const axiosPublic = useAxiosPublic();
     const { data: Comments = [], refetch } = useQuery({
         queryKey: ['contests'],
@@ -16,6 +19,8 @@ const CommentBox = ({ commentedContest, commentedContestEmail }) => {
             return res.data;
         }
     });
+
+
 
     useEffect(() => {
         const matchingComment = Comments.find(comment => comment.contestName === commentedContest);
@@ -48,7 +53,8 @@ const CommentBox = ({ commentedContest, commentedContestEmail }) => {
                 const newComment = {
                     commentDescription: comment,
                     contestName: commentedContest,
-                    createdEmail: commentedContestEmail
+                    createdEmail: commentedContestEmail,
+                    commentTime:currentTime
                 };
                 axiosPublic.post('/commentDetails', newComment).then(() => {
                     Swal.fire({
@@ -96,19 +102,19 @@ const CommentBox = ({ commentedContest, commentedContestEmail }) => {
                 ) 
                 : 
                 (
-                    <form onSubmit={handleComment} className="card-body grid grid-rows-1">
+                    <form onSubmit={handleComment} className="card-body grid grid-cols-2">
                         <div className="form-control">
                             <input
                                 type="text"
                                 name="comment"
                                 placeholder="text"
-                                className="input input-bordered"
+                                className="input input-bordered "
                                 required
                             />
                         </div>
 
-                        <div className="form-control mt-6">
-                            <button className="btn btn-primary">Comment it!</button>
+                        <div className="form-control w-1/3">
+                            <button className="btn btn-primary p-3">Comment it!</button>
                         </div>
                     </form>
                 )

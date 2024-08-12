@@ -6,15 +6,39 @@ import { useEffect, useState } from "react";
 export const currentTime = moment().format("dddd, MMMM D, YYYY");
 
 const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
-  console.log(transformedContests)
-  console.log(contest);
+  // console.log(transformedContests)
+  // console.log(contest);
   const name = contest.name;
   const  count  = useCount(name);
-  console.log(count[0]);
+  // console.log(count[0]);
   let isSubmitted = false;
-  console.log(currentTime);
+  // console.log(currentTime);
 
   const [available, setAvailable] = useState(true);
+  
+  const [remainingTime, setRemainingTime] = useState('');
+  const [clicked, setClicked] = useState(false)
+
+  useEffect( () =>{
+    const contestDate = moment(contest.date);
+
+    const updateRemainigTime = () =>{
+      const now = moment();
+      const duration = moment.duration(contestDate.diff(now));
+      if(duration.asMilliseconds() <= 0){
+        setAvailable(false);
+        setRemainingTime('Registration closed');
+      }
+      else{
+        setRemainingTime(`${duration.days()}d ${duration.hours()}h ${duration.minutes()} m ${duration.seconds()}s`)
+      }
+
+      
+    };
+    updateRemainigTime();
+      const interval = setInterval(updateRemainigTime,1000);
+      return () => clearInterval(interval)
+  },[contest.date] )
 
   useEffect(() => {
     const contestDate = moment(contest.date); // Parsing ISO 8601 format date
@@ -24,16 +48,16 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
     }
   }, [contest.date]);
 
-  console.log(available);
+  // console.log(available);
 
   
   
-  console.log('This contest is submitted by this user',isSubmitted);
+  // console.log('This contest is submitted by this user',isSubmitted);
   const filteredContests = transformedContests.filter(contestItem => contestItem.name === name);
   let winner = filteredContests.some(contestItem => contestItem.winner);
 
   let submitted = filteredContests.find(contest => contest.submittedEmail === LoggedUser);
-  console.log(submitted?.submittedEmail)
+  // console.log(submitted?.submittedEmail)
   if(submitted?.submittedEmail === LoggedUser){
     isSubmitted=true;
   }
@@ -41,34 +65,27 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
     isSubmitted=false;
   }
 
-  console.log(userAccess);
+  // console.log(userAccess);
 
   // console.log('Filtered Contests:', filteredContests);
-  console.log('Winner is declared for this contest',winner);
+  // console.log('Winner is declared for this contest',winner);
   
 
     return (
-        <div className="card w-80 shadow-gray-50 shadow-2xl">
+        <div className="card w-80 shadow-gray-50 shadow-2xl   hover:z-50 transition-all duration-1000">
             <figure>
               <img
                 src={contest.image}
                 alt="Shoes"
               />
             </figure>
-            <p>{available}</p>
+            <p className="ml-1 text-teal-300 font-bold">Remaining Time : <button className="bg-red-800 text-white">{remainingTime}</button></p>
             
             <div className="card-body  h-40">
               <h2 className="card-title">{contest.name}</h2>
-              {/* <p>{contest.ParticipantsCount}</p> */}
-              <p className="text-green-700">tag:<span className="text-blue-700 underline">#{contest.tag}</span></p>
+              <p className="text-green-700">tag:<span className="text-blue-700 font-bold underline"><a>#{contest.tag}</a></span></p>
               <p>{contest.description}</p>
-              {/* <p>{contest.ParticipantsCount}</p> */}
-              {/* <div className="card-actions justify-end">
-                <Link to={`/submitted/${contest._id}`}>
-                  <button className="btn btn-primary">Register</button>
-                </Link>
-
-              </div> */}
+              
               {
                 (available)?
                 <div>

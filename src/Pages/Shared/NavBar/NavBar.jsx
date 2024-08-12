@@ -1,15 +1,13 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
-import { FaShoppingCart } from 'react-icons/fa';
-// import useCart from "../../../hooks/useCart";
-// import useAdmin from "../../../hooks/useAdmin";
 export let  LoggedEmail = '' 
 const NavBar = () => {
     const { user, logOut } = useContext(AuthContext);
     LoggedEmail = user?.email;
     // const [isAdmin] = useAdmin();
     // const [cart] = useCart();
+    console.log(user)
 
     const handleLogOut = () => {
         logOut()
@@ -29,31 +27,31 @@ const NavBar = () => {
             }
         </div>
         </div>
-        <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+        <ul tabIndex={0} className=" mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 ">
             {
                 user?
                 <>
-                <li>
+                <li className="hover:ml-12 transition-all duration-700">
                     <a className="justify-between">
-                    <Link to="dashboard/profile">Profile
-                    <div className="badge badge-secondary ml-3">{user?.displayName}</div>
+                    <Link className="" to="dashboard/profile">Profile
+                    <div className=" ml-3 p-2 bg-pink-700 rounded-md">{user?.displayName}</div>
                     </Link>
                     </a>
                 </li>
-                <li><Link to="/dashboard/profile"><a>Dashboard</a></Link></li>
-                <li onClick={handleLogOut}><a>Logout</a></li>
+                <li className="hover:ml-16 transition-all duration-700"><Link to="/dashboard/profile"><a>Dashboard</a></Link></li>
+                <li className="hover:ml-16 transition-all duration-700" onClick={handleLogOut}><a>Logout</a></li>
                 </>
                 :
-                <li className="btn"><Link to="/login">Login</Link></li>
+                <li className="btn hover:ml-16 transition-all duration-700"><Link to="/login">Login</Link></li>
             }
         </ul>
     </div>
 
     const navOptions = <>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/allContests">All Contests</Link></li>
+        <li><Link className="hover:text-xl hover:shadow-inner hover:shadow-white transition-all duration-700" to="/">Home</Link></li>
+        <li><Link className="hover:text-xl hover:shadow-inner hover:shadow-white transition-all duration-700" to="/allContests">All Contests</Link></li>
         {
-            user &&  <li><Link to="/dashboard/profile">Dashboard</Link></li>
+            user &&  <li><Link className="hover:text-xl  hover:shadow-inner hover:shadow-white transition-all duration-700" to="/dashboard/profile">Dashboard</Link></li>
         }
         
         

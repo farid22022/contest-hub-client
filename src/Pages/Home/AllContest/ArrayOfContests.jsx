@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 import Contest from "./Contest";
 import { FiSearch } from "react-icons/fi";
 import useContest from "../../../Hooks/useContest";
@@ -7,109 +7,93 @@ import useAuth from "../../../Hooks/useAuth";
 import usePersonalDetails from "../../../Hooks/usePersonalDetails";
 import './styles.css'
 import moment from 'moment';
+import { AuthContext } from "../../../providers/AuthProvider";
+import { Link } from "react-router-dom";
 
 export const currentTime = moment().format("dddd, MMMM D, YYYY");
 
 const ArrayOfContests = () => {
+    const {bannerSearchedItems,isClicked} = useContext(AuthContext);
     // const [contests, setContests] = useState([]);
     const [ personalDetails ] = usePersonalDetails();
-  console.log(personalDetails);
+//   console.log(personalDetails);
     const { user } = useAuth();
-    console.log(user?.email);
+    // console.log(user?.email);
     const LoggedUser = user?.email;
-    console.log(LoggedUser);
+    // console.log(LoggedUser);
     const [userAccess, setUserAccess ] = useState(false);
     const [contests] = useContest();
-    const [searchInput, setSearchInput] = useState("");  // State for search input
-    const [filteredContests, setFilteredContests] = useState([]);  // State for filtered contests
+    // const [searchInput, setSearchInput] = useState("");  // State for search input
+    const [newContests, setNewContests] = useState([]);  // State for filtered contests
 
     const [submittedContests] = useContestUsers();
-    console.log(submittedContests);
     const transformedContests = submittedContests.map(contest => {
         const { name, createdEmail, submittedEmail, submittedName, winner } = contest;
         return { name, createdEmail, submittedEmail, submittedName, winner };
     });
-    
-    console.log(transformedContests);
-    useEffect(() => {
-        setFilteredContests(contests);
-      }, [contests]);
 
     
+    
+    // useEffect(() => {
+    //     setFilteredContests(contests).reverse();
+    //   }, [contests]);
 
-    //   useEffect(() => {
-    //     if (personalDetails.length > 0) {
-    //         let userHasAccess = personalDetails.some(aUser => aUser.email === user?.email);
-    //         setAccess(userHasAccess);
-    //         console.log('access', userHasAccess);
-    //     }
-    // }, [personalDetails,setAccess,user]);
+       
+    // setFilteredContests(contests);
+    // setNewContests(contests);
+      
+
+    
     useEffect( () =>{
         if(personalDetails.length > 0){
             personalDetails.map(personalDetail => {
-                console.log(personalDetail, personalDetail.access,personalDetail.email,LoggedUser)
                 if(personalDetail.email === LoggedUser && personalDetail.access){
                     setUserAccess(true)
-                    console.log(userAccess);
                     return;
                 }
             })
         }
     })
-
-    console.log(userAccess)
-      
-    // if(contests.length == 0)
-    //     return(
-    // //  <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
-    //     <progress className="progress w-56"></progress>
-    // )
+    
+    if(contests.length == 0)
+        return(
+        <progress className=" progress w-56">No Internet</progress>
+    )
 
     
-    // console.log(contests);
-    const handleSearch = () => {
-        setFilteredContests([])
-        const searchedContests = contests.filter(contest => contest.tag === searchInput);
-        setFilteredContests(searchedContests);
-        console.log(filteredContests);
-        
-    };
-
+    let reversedArray=[...bannerSearchedItems]
+    if(bannerSearchedItems.length === 0){
+        reversedArray = contests;
+    }
+    let finalArrayOfContest = [...reversedArray].reverse();
+    
     return (
-        <div className=" mt-12">
-            <div>
-                <div className="inline-block mt-12 mb-12">
-                    <input 
-                        type="text"
-                        placeholder="tag"
-                        required
-                        value={searchInput}  // Bind input value to searchInput state
-                        onChange={(e) => setSearchInput(e.target.value)}  // Update state on input change
-                        className="p-4 pt-7 pb-2 rounded-l-2xl bg-yellow-100 text-xl"
-                    />
-                    <button 
-                        className="text-xl bg-slate-500 rounded-r-2xl p-2 pl-8"
-                        onClick={handleSearch}  // Call handleSearch on button click
-                    >
-                        <FiSearch />
-                        <h2>Search</h2>
-                    </button>
+        <div className={` mt-16 shadow-2xl shadow-slate-600 border-opacity-20 border-emerald-50 ${isClicked ? 'blur-xl':''} transition-all duration-1000`}>
+            
+            
+            <div className="fixedImageHome bg-fixed pt-12  shadow-black shadow-2xl ">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-x-6 space-y-6 pb-12">
+                {
+                    finalArrayOfContest
+                        .filter(contest=>contest.accepted)
+                        .slice(0,5)
+                        .map(contest => (
+                            <Contest
+                                key={contest._id}
+                                contest={contest}
+                                transformedContests={transformedContests}
+                                LoggedUser={LoggedUser}
+                                userAccess={userAccess}
+                                className=""
+                            ></Contest>
+                    ))
+                }
+                </div>
+                <div className="text-center mt-6 pb-8">
+                    <Link to="/allContests"><button>See More</button></Link>
                 </div>
             </div>
             
-            <div className="fixedImageHome bg-fixed grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-x-6 space-y-6 pb-12">
-                {
-                    filteredContests.map(contest => (
-                        <Contest
-                            key={contest._id}
-                            contest={contest}
-                            transformedContests={transformedContests}
-                            LoggedUser={LoggedUser}
-                            userAccess={userAccess}
-                        ></Contest>
-                    ))
-                }
-            </div>
         </div>
     );
 };

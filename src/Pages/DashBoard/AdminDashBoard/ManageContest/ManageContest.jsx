@@ -11,6 +11,31 @@ const ManageContest = () => {
     console.log(contests)
     const axiosSecure = useAxiosSecure();
 
+    const handleAcceptContest = id =>{
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, accept it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/contests/${id}`)
+                    .then(res => {
+                        console.log("accepted",res.data)
+                    })
+                Swal.fire({
+                    title: "Accepted!",
+                    text: "This contest has been accepted.",
+                    icon: "success"
+              });
+            }
+          });
+    }
+
     const handleDeleteContest = ( id) =>{
         
 
@@ -45,17 +70,18 @@ const ManageContest = () => {
 
     return (
         <div>
-            <h2>ManageContest {contests.length}</h2>
+            <h2 className="text-center">ManageContest </h2>
+            <h2 className="text-left translate-x-5 text-xl ">Total Contest: <span className="text-red-900">{contests.length}</span></h2>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
                     <thead>
-                    <tr>
+                    <tr className="text-sm">
                         <th>Serial</th>
                         <th>Name</th>
-                        <th>Delete</th>
-                        <th>Confirm</th>
-                        <th>Comment</th>
+                        <th className="translate-x-4">Delete</th>
+                        <th className="translate-x-4">Confirm</th>
+                        <th className="translate-x-24">Comment</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,10 +89,16 @@ const ManageContest = () => {
                     {
                         contests.map((contest, index) =>(
                             <tr key={index}>
-                                <th>{index+1}</th>
-                                <td className="font-bold">{contest.name}</td>
-                                <td><button onClick={() =>handleDeleteContest(contest._id)} className="btn btn-ghost btn-lg">Delete</button></td>
-                                <td><button  className="btn btn-ghost btn-lg">Confirm</button></td>
+                                <th className="translate-x-3">({index+1})</th>
+                                <td className="font-bold ">{contest.name}</td>
+                                <td><button onClick={() =>handleDeleteContest(contest._id)} className="btn btn-ghost btn-lg bg-orange-600">Delete</button></td>
+                                <td>{
+                                        (contest.accepted === true)?
+                                        <button className="btn btn-ghost btn-lg bg-green-600">Confirmed</button>
+                                        :
+                                        <button onClick={()=>handleAcceptContest(contest._id)} className="btn btn-ghost btn-lg bg-red-600">Pending</button>
+                                    }
+                                </td>
                                 <td>
                                     <CommentBox
                                     commentedContest={contest.name}

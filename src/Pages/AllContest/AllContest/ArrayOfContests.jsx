@@ -5,14 +5,11 @@ import useContest from "../../../Hooks/useContest";
 import useContestUsers from "../../../Hooks/useContestUsers";
 import useAuth from "../../../Hooks/useAuth";
 import usePersonalDetails from "../../../Hooks/usePersonalDetails";
-// import { Parallax } from 'react-parallax';
-// import bg1 from '../../../assets/BGImages/bg1.jpeg'
-// import SimpleParallax from "simple-parallax-js";
 import './styles.css'
+import { AuthContext } from "../../../providers/AuthProvider";
 const ArrayOfContests = () => {
-    // const [contests, setContests] = useState([]);
     const [ personalDetails ] = usePersonalDetails();
-  console.log(personalDetails);
+    console.log(personalDetails);
     const { user } = useAuth();
     console.log(user?.email);
     const LoggedUser = user?.email;
@@ -20,7 +17,9 @@ const ArrayOfContests = () => {
     const [userAccess, setUserAccess ] = useState(false);
     const [contests] = useContest();
     const [searchInput, setSearchInput] = useState("");  // State for search input
-    const [filteredContests, setFilteredContests] = useState([]);  // State for filtered contests
+    const [filteredContests, setFilteredContests] = useState([]);  // State for filtered contests = 
+    const {
+        isClicked} = useContest(AuthContext)
 
     const [submittedContests] = useContestUsers();
     console.log(submittedContests);
@@ -32,16 +31,18 @@ const ArrayOfContests = () => {
     console.log(transformedContests);
     useEffect(() => {
         setFilteredContests(contests);
+        
       }, [contests]);
 
+    // setFilteredContests(contests);
     
 
     //   useEffect(() => {
-    //     if (personalDetails.length > 0) {
-    //         let userHasAccess = personalDetails.some(aUser => aUser.email === user?.email);
-    //         setAccess(userHasAccess);
-    //         console.log('access', userHasAccess);
-    //     }
+        // if (personalDetails.length > 0) {
+        //     let userHasAccess = personalDetails.some(aUser => aUser.email === user?.email);
+        //     setAccess(userHasAccess);
+        //     console.log('access', userHasAccess);
+        // }
     // }, [personalDetails,setAccess,user]);
     useEffect( () =>{
         if(personalDetails.length > 0){
@@ -54,14 +55,12 @@ const ArrayOfContests = () => {
                 }
             })
         }
-    })
-
-    console.log(userAccess)
+    },[])
       
     if(contests.length == 0)
         return(
     //  <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
-        <progress className="progress w-56"></progress>
+        <progress className="loader progress w-56"></progress>
     )
 
     
@@ -74,31 +73,34 @@ const ArrayOfContests = () => {
         
     };
 
+    let reversedArray=[...filteredContests].reverse()
+    console.log('ArrayOfContests1',isClicked)
+
     return (
         
-        <div className="fixedImage bg-fixed mt-12 ">
+        <div className={`fixedImage bg-fixed mt-12 ${isClicked ?'blur-xl':''}`}>
             <div>
-                <div className="inline-block mt-12 mb-12">
+                <div className="inline-block mt-16 mb-12 ">
                     <input 
                         type="text"
                         placeholder="tag"
                         required
                         value={searchInput}  // Bind input value to searchInput state
                         onChange={(e) => setSearchInput(e.target.value)}  // Update state on input change
-                        className="p-4 pt-7 pb-2 rounded-l-2xl bg-yellow-100 text-xl"
+                        className=" p-2 rounded-l-2xl bg-yellow-100 text-xl"
                     />
                     <button 
-                        className="text-xl bg-slate-500 rounded-r-2xl p-2 pl-8"
+                        className="text-xl bg-slate-500 rounded-l-2xl p-2"
                         onClick={handleSearch}  // Call handleSearch on button click
                     >
-                        <FiSearch />
-                        <h2>Search</h2>
+                        
+                        <h2><FiSearch className="text-xs inline-flex "/>Search</h2>
                     </button>
                 </div>
             </div>
             <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-x-3 space-y-6 mb-12 pb-12 p-4">
                 {
-                    filteredContests.map(contest => (
+                    reversedArray.map(contest => (
                         <Contest
                             key={contest._id}
                             contest={contest}

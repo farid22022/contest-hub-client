@@ -27,9 +27,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 mt-2 mb-2">
             <h2>Connect with</h2>
             <div className="mt-2 flex space-x-3">
-              <div className="link link-hover"><FaFacebook/></div>
-              <div className="link link-hover"><FaTwitter /></div>
-              <div className="link link-hover"><FaYoutube /></div>
+              <div className="link link-hover hover:w-5 transition-all duration-700"><FaFacebook/></div>
+              <div className="link link-hover hover:w-5 transition-all duration-700"><FaTwitter /></div>
+              <div className="link link-hover hover:w-5 transition-all duration-700"><FaYoutube /></div>
             </div>
         </div>
       </form>

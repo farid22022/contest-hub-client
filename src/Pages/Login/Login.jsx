@@ -4,16 +4,22 @@ import login from '../../../public/Sign/login.gif'
 import Swal from "sweetalert2";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import { FaGoogle } from "react-icons/fa6";
+import { signInWithPopup } from "firebase/auth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 
 const Login = () => {
-    const { signIn } = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
+    const { signIn , googleSignIn ,googleLogin} = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
 
     const from = location.state?.from?.pathname || "/";
     console.log('state in the location login page', location.state)
-
+    
+    
+    
     
     const handleLogin = event => {
         event.preventDefault();
@@ -24,7 +30,43 @@ const Login = () => {
         signIn(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
+                console.log(user,'33Login');
+                let timerInterval;
+                    Swal.fire({
+                    title: `Login Successful!`,
+                    html: "Please wait for <b></b> milliseconds.",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        const timer = Swal.getPopup().querySelector("b");
+                        timerInterval = setInterval(() => {
+                        timer.textContent = `${Swal.getTimerLeft()}`;
+                        }, 100);
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval);
+                    }
+                    }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log("I was closed by the timer");
+                    }
+                    });
+                navigate(from, { replace: true });
+            })
+
+        googleLogin(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user.email);
+                const userInfo = {
+                    name:user.displayName,
+                    email:user.email,
+                    access:"on"
+                }
+                axiosPublic.post('/personalDetails', userInfo)
+                axiosPublic.post('/users', userInfo)
                 let timerInterval;
                     Swal.fire({
                     title: `Login Successful!`,
@@ -88,6 +130,9 @@ const Login = () => {
                             </div>
                         </form>
                         <p className='px-6'><small>New Here? <Link to="/signup">Create an account</Link> </small></p>
+                    </div>
+                    <div>
+                       <button onClick={googleLogin}><FaGoogle/></button> 
                     </div>
                 </div>
             </div>

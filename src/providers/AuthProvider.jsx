@@ -8,8 +8,11 @@ export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+    const [creators, setCreators] = useState([]);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isClicked, setIsClicked] = useState(false);
+    const [bannerSearchedItems, setBannerSearchedItems] = useState([])
     const googleProvider = new GoogleAuthProvider();
     const axiosPublic = useAxiosPublic();
 
@@ -26,6 +29,11 @@ const AuthProvider = ({ children }) => {
     const googleSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider);
+    }
+
+    const googleLogin = ()=>{
+        setLoading(true)
+        return signInWithPopup(auth, googleProvider)
     }
 
     const logOut = () => {
@@ -71,8 +79,15 @@ const AuthProvider = ({ children }) => {
         createUser,
         signIn,
         googleSignIn,
+        googleLogin,
         logOut,
-        updateUserProfile
+        updateUserProfile,
+        isClicked, 
+        setIsClicked,
+        bannerSearchedItems,
+        setBannerSearchedItems,
+        creators, 
+        setCreators
     }
 
     return (

@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import useAuth from "../../../../Hooks/useAuth";
+import { index } from "../../../../Layout/DashBoard";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -15,6 +16,7 @@ const AddContest = () => {
     const axiosPublic = useAxiosPublic();
     const [startDate, setStartDate] = useState(new Date());
     const {user} = useAuth();
+    console.log(index)
 
     const onSubmit = async (data) => {
         console.log(data);
@@ -57,21 +59,21 @@ const AddContest = () => {
 
     return (
         
-        <div className="grid grid-cols-1 ">
-            <h3 className="text-3xl text-cyan-900 bg-slate-600 font-bold text-center rounded-xl p-2">Add A Contest</h3>
+        <div className="grid grid-cols-1  ml-72 p-2 hover:shadow-inner shadow-2xl shadow-slate-300  rounded-xl hover:shadow-slate-950  hover:ml-10 w-2/3 hover:w-full transition-all duration-1000 ">
+            <h3 className=" text-yellow-900 hover:ml-16 hover:text-yellow-300 transition-all duration-1000  text-3xl bg-slate-600 font-bold text-center rounded-xl p-2">Add A Contest{index}</h3>
             <form className="grid grid-cols-1 text-center justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-control w-full">
+                <div className=" form-control w-full"> 
                     <label className="label">
                         <span className="label-text">Contest Name</span>
                     </label>
-                    <input className="input input-bordered w-full" {...register("name", { required: true })} />
+                    <input className="hover:bg-neutral-950 transition-all duration-300 input input-bordered w-full" {...register("name", { required: true })} />
                 </div>
 
                 <div className="form-control w-full">
                     <label className="label">
                         <span className="label-text">Image*</span>
                     </label>
-                    <input className="input input-bordered w-1/2" type="file" {...register("image")} />
+                    <input className="hover:bg-neutral-950 transition-all duration-300 input input-bordered w-1/2" type="file" {...register("image")} />
                 </div>
 
                 <div className="flex space-x-3">
@@ -79,13 +81,13 @@ const AddContest = () => {
                         <label className="label">
                             <span className="label-text">Contest Description</span>
                         </label>
-                        <input className="input input-bordered w-full" {...register("description")} />
+                        <input className="hover:bg-neutral-950 transition-all duration-300 input input-bordered w-full" {...register("description")} />
                     </div>
                     <div className="form-control w-full">
                         <label className="label">
                             <span className="label-text">Contest Price</span>
                         </label>
-                        <input className="input input-bordered w-full" {...register("price")} />
+                        <input className="hover:bg-neutral-950 transition-all duration-300 input input-bordered w-full" {...register("price")} />
                     </div>
                 </div>
 
@@ -93,14 +95,14 @@ const AddContest = () => {
                     <label className="label">
                         <span className="label-text">Prize Money or Gift</span>
                     </label>
-                    <input className="input input-bordered w-full" {...register("gift")} />
+                    <input className="hover:bg-neutral-950 transition-all duration-300 input input-bordered w-full" {...register("gift")} />
                 </div>
 
                 <div className="form-control w-full">
                     <label className="label">
                         <span className="label-text">Text Submission</span>
                     </label>
-                    <input className="input input-bordered w-full" {...register("submission")} />
+                    <input className="hover:bg-neutral-950 transition-all duration-300 input input-bordered w-full" {...register("submission")} />
                 </div>
 
                 <div className="flex space-x-3">
@@ -142,8 +144,8 @@ const AddContest = () => {
                     </div>
                 </div>
 
-                <button className="btn w-1/4 mt-4">
-                    Add Contest <img src={addIcon}/>
+                <button className=" transition-all duration-1000 hover:text-xl hover:mt- btn w-1/4 mt-4">
+                    Add Contest <img  src={addIcon}/>
                 </button>
             </form>
             <button className="btn btn-ghost bg-blue-800 w-1/6 mt-6">Back</button>

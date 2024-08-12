@@ -1,85 +1,82 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+
+
+
 import useContest from "../../../Hooks/useContest";
+
+// const CreatorPart = () => {
+//     const [contests] = useContest();
+//     const {setCreators} = useContext(AuthContext);
+//     const uniqueEmails = Array.from(new Set(contests.map(contest => contest.createdEmail)));
+//     const contestsCreatedByEmail = uniqueEmails.map(email => ({
+//         email: email,
+//         contestsCount: contests.filter(contest => contest.createdEmail === email).length
+//     }));
+
+//     const sortedContestsCreatedByEmail = contestsCreatedByEmail.sort((a, b) => b.contestsCount - a.contestsCount);
+//     setCreators(sortedContestsCreatedByEmail)
+
+//     return (
+//         <div>
+//             <h2 className="text-center text-4xl font-bold text-blue-600 mb-12">Best Creator Part</h2>
+//             <div className="text-center bg-zinc-700 p-5 mt-12 rounded-md grid grid-cols-2">
+//                 {sortedContestsCreatedByEmail.slice(0,2).map((creator, index) => (
+                //     <div className="card bg-base-100 w-96 shadow-xl" key={index}>
+                //         <div className="card-body">
+                //             {
+                //                 (index===0) &&
+                //                 <>
+                //                     <h3 className="text-3xl">Best Creator</h3>
+                //                     <img src="./../../../../public/gold-medal.png"/>
+                //                 </>
+                //             }
+                //             <h2 className="card-title">Email</h2>
+                //             <h2 className='text-emerald-600'>{creator.email}</h2>
+                //             <p>Created Contest : <p className='badge bg-red-800'>{creator.contestsCount}</p></p>
+                            
+                //         </div>
+                //    </div>
+//                 ))}
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default CreatorPart;
+
 
 
 const CreatorPart = () => {
-
-    const axiosPublic = useAxiosPublic();
-    const {data : users =[], refetch} = useQuery({
-        queryKey:['users'],
-        queryFn: async () =>{
-            const res = await axiosPublic.get('/users',{
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem('access-token')}`
-              }
-            });
-            return res.data
-        }
-    })
-    console.log(users);
-    
-
-    const [contests, loading] = useContest();
-    console.log(contests)
-
-    const contestsCreatedByEmail = users.map(user => {
-        const createdEmail = user.email;
-        const createdContests = contests.filter(contest => contest.createdEmail === createdEmail);
-        console.log(createdEmail, createdContests.length);
-        return {
-            email: createdEmail,
-            contestsCount: createdContests.length
-        };
-    });
-    const sortedContestsCreatedByEmail = contestsCreatedByEmail.sort((a, b) => b.contestsCount - a.contestsCount);
-    console.log(contestsCreatedByEmail,sortedContestsCreatedByEmail);
-
-
+    const [contests] = useContest();
+    const createdEmails = [...new Set(contests.filter(contest => contest.createdEmail).map(contest => contest.createdEmail))];
+    console.log(createdEmails)
     return (
         <div>
-            <h2 className="text-center text-4xl font-bold text-blue-600">Best Creator Part</h2>
-            <div className="text-center bg-zinc-700 p-5 mt-12 rounded-md grid grid-cols-1">
-                {sortedContestsCreatedByEmail.map((creator, index) => (
-                    <div className="btn border-b-pink-600 text-xl mb-4 bg-blue-700 pl-12" key={index}>
-                        
-                        {index+1}<span className="text-xl text-yellow-700">{creator.email}</span>creator  created contests : <span className="btn border-t-cyan-500 bg-red-700 rounded-3xl">{creator.contestsCount} </span>
-                        {
-                            (index === 0)?
-                            <p className="bg-red-800 font-bold rounded-2xl p-2 ">Best Creator</p>
-                            :
-                            <></>
-                        }
-                    </div>
-                ))}
+            <h3>All Creator{contests.length} {createdEmails.length}</h3>
+            <div>
+                {
+                    createdEmails.slice(0,2).map((Email,index) =>(
+                        <div className="card bg-base-100 w-96 shadow-xl" key={index}>
+                        <div className="card-body">
+                            {
+                                (index===0) &&
+                                <>
+                                    <h3 className="text-3xl">Best Creator</h3>
+                                    <img src="./../../../../public/gold-medal.png"/>
+                                </>
+                            }
+                            <h2 className="card-title">Email</h2>
+                            <h2 className='text-emerald-600'>{Email}</h2>
+                            <p>Created Contest : <p className='badge bg-red-800'>{
+                                
+                            }</p></p>
+                            
+                        </div>
+                   </div>
+                    ))
+                }
             </div>
         </div>
     );
 };
 
 export default CreatorPart;
-
-
-// const newTitle = title.trim().toLowerCase();
-// console.log('newTitle:', newTitle);
-// console.log(submittedAssignments.length)
-
-// let isTitleSubmitted = false;
-
-// titles?.forEach(item => {
-//     const itemTitle = item.title.trim().toLowerCase();
-//     console.log('Comparing with item title:', itemTitle);
-
-//     if (itemTitle === newTitle) {
-//         console.log('Title matched:', item.title);
-//         console.log(submittedAssignments)
-//         const titleEmail = item.userEmail?.trim().toLowerCase() || ""; // Assuming you want to compare the userEmail of the title item
-//         submittedAssignments?.forEach(submitted => {
-//             const email = submitted.submittedEmail?.trim().toLowerCase() || "";
-//             console.log('Checking submitted:', submitted.title);
-//             if (email === titleEmail) {
-//                 isTitleSubmitted = true;
-//                 console.log(`Match found: ${submitted.submittedEmail}`);
-//             }
-//         });
-//     }

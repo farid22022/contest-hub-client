@@ -24,6 +24,7 @@ import ArrayOfContests from "../Pages/AllContest/AllContest/ArrayOfContests";
 import SubmittedContests from "../Pages/DashBoard/UserDashBoard/Profile/SubmittedContests";
 import CommentBox from "../Pages/DashBoard/AdminDashBoard/ManageContest/CommentBox";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import Comments from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/Comments/Comments";
 
 export const router = createBrowserRouter([
     {
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
           {
             path: 'winningContest',
             element: <WinningContest></WinningContest>
+          },
+          {
+            path: 'commentSection',
+            element:<Comments></Comments>
           },
           // admin only routes
           {

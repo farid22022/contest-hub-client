@@ -1,15 +1,40 @@
 import { Link } from "react-router-dom";
 import useCount from "../../../Hooks/useCount";
+import moment from "moment";
+import { useEffect, useState } from "react";
 // import usePersonalDetails from "../../../Hooks/usePersonalDetails";
-
+export const currentTime = moment().format("dddd, MMMM D, YYYY");
 
 const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
-  console.log(transformedContests)
-  console.log(contest);
   const name = contest.name;
   const  count  = useCount(name);
-  console.log(count[0]);
   let isSubmitted = false;
+
+  const [available, setAvailable] = useState(true);
+  const [remainingTime, setRemainingTime] = useState('');
+
+  useEffect( () =>{
+    const contestDate = moment(contest.date);
+
+    const updateRemainigTime = () =>{
+      const now = moment();
+      const duration = moment.duration(contestDate.diff(now));
+      if(duration.asMilliseconds() <= 0){
+        setAvailable(false);
+        setRemainingTime('Registration closed');
+      }
+      else{
+        setRemainingTime(`${duration.days()}d ${duration.hours()}h ${duration.minutes()} m ${duration.seconds()}s`)
+      }
+
+      
+    };
+    updateRemainigTime();
+      const interval = setInterval(updateRemainigTime,1000);
+      return () => clearInterval(interval)
+  },[contest.date] )
+
+
 
   
   
@@ -26,10 +51,6 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
     isSubmitted=false;
   }
 
-  console.log(userAccess);
-
-  // console.log('Filtered Contests:', filteredContests);
-  console.log('Winner is declared for this contest',winner);
   
 
     return (
@@ -40,10 +61,12 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
                 alt="Shoes"
               />
             </figure>
-            <div className="card-body h-40 ">
+            <p className="ml-1 text-teal-300 font-bold">Remaining Time : <button className="bg-red-800 text-white">{remainingTime}</button></p>
+            
+            <div className="card-body  h-40">
               <h2 className="card-title">{contest.name}</h2>
               {/* <p>{contest.ParticipantsCount}</p> */}
-              <p>tag:{contest.tag}</p>
+              <p className="text-green-700">tag:<span className="text-blue-700 underline">#{contest.tag}</span></p>
               <p>{contest.description}</p>
               {/* <p>{contest.ParticipantsCount}</p> */}
               {/* <div className="card-actions justify-end">
@@ -53,6 +76,9 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
 
               </div> */}
               {
+                (available)?
+                <div>
+                {
                 (userAccess === true)?
                 <>
                 {
@@ -76,6 +102,10 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
                 </>
                 :
                 <button className="btn btn-error">Blocked!</button>
+              }
+                </div>
+                :
+                <button className="btn btn-error">Unavailable!</button>
               }
             </div>
             <div className="divider"></div>

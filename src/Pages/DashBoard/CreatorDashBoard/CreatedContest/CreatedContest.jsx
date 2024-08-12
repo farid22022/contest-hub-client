@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import useAdmin from "../../../../Hooks/useAdmin";
 import Swal from "sweetalert2";
+import { index } from "../../../../Layout/DashBoard";
 
 
 const CreatedContest = () => {
@@ -108,16 +109,24 @@ const CreatedContest = () => {
               });
             }
           });
-
-        
-       
     }
+
+    // if(createdContests.length == 0)
+    //     return(
+    // //  <span className="loading loading-spinner text-error pt-24 mt-48 w-24 lg:ml-96 pl-4 text-6xl">No Internet</span>
+    //     <progress className="loader progress w-56"></progress>
+    // )
     
         
 
     return (
         <div className="grid grid-cols-1 text-center space-y-3">
-            <h2 className="text-2xl font-bold text-blue-500 ">Created Contest {createdContests.length}</h2>
+            {
+                (index === 1)?
+                <h2 className="text-2xl font-bold text-blue-500 translate-x-56 hover:text-yellow-400  duration-1000">Created Contest {createdContests.length}</h2>
+                :
+                <h2 className="text-2xl font-bold text-blue-500  hover:text-yellow-400  duration-1000">Created Contest {createdContests.length}</h2>
+            }
             
             <div>
                    
@@ -125,14 +134,14 @@ const CreatedContest = () => {
                     <table className="table">
                         {/* head */}
                         <thead>
-                        <tr>
-                            <th>Serial</th>
-                            <th>Name</th>
-                            <th>Update</th>
-                            <th>Delete</th>
-                            <th>Status</th>
-                            <th>Submission</th>
-                        </tr>
+                            <tr>
+                                <th >Serial</th>
+                                <th className="translate-x-5">Name</th>
+                                <th className="translate-x-4">Update</th>
+                                <th className="translate-x-3">Delete</th>
+                                <th className="translate-x-5">Status</th>
+                                <th>Submission</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {/* row 1 */}
@@ -142,10 +151,10 @@ const CreatedContest = () => {
                                 createdContests.map((contest, index) =>(
                                 <tr key={index}>
                                     
-                                    <td className="text-yellow-500 font-serif font-bold text-xl">{index+1}</td>
+                                    <td className="text-yellow-500 font-serif font-bold text-xl translate-x-2">[{index+1}]</td>
                                     <td><button className="btn btn-info">{contest.name}</button></td>
                                     {
-                                        ((!(contest.accepted === true)) && isAdmin)?
+                                        ((!(contest.accepted === true)) )?
                                         <td>
                                             <Link to={`updatedContest/${contest._id}`}>
                                                 <button className="btn btn-success">Update</button>
@@ -155,7 +164,7 @@ const CreatedContest = () => {
                                         <td><button onClick={handleNoUpdate} className="btn btn-info">Update</button></td>
                                     }
                                     {
-                                        ((!(contest.accepted === true)) && isAdmin)?
+                                        ((!(contest.accepted === true)) )?
                                         
                                         <td><button onClick={() => handleDeleteContest(contest._id)} className="btn btn-warning">Delete</button></td>
                                         :
@@ -163,22 +172,17 @@ const CreatedContest = () => {
                                         
                                     }
                                     <th>
+                                        
                                         {
-                                            isAdmin ?
-                                                <>
-                                                    {
-                                                        contest.accepted?
-                                                            <button  className="btn btn-success">Accepted</button>
-                                                            :
-                                                            <button onClick={()=>handleAcceptContest(contest._id)} className="btn btn-success">Pending</button>
-                                                    }
-                                                </>
+                                            contest.accepted?
+                                                <button  className="btn btn-success">Accepted</button>
                                                 :
-                                                <button className="btn btn-success">You are not Admin</button>
+                                                <button onClick={()=>handleAcceptContest(contest._id)} className="btn btn-success bg-red-600">Pending</button>
                                         }
+                                                
                                     </th>
                                     <th>
-                                        <button className="btn btn-success">Submit</button>
+                                        <Link to="/dashboard/contestSubmitted"><button className="btn btn-success">Submit</button></Link>
                                     </th>
 
                                 </tr>
