@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 // import { comment } from "postcss";
 import './style.css'
 import CommentBox from "./CommentBox";
+import { useState } from "react";
 export let commentedContest='';
 export let commentedContestEmail =''
 const ManageContest = () => {
@@ -70,7 +71,7 @@ const ManageContest = () => {
 
     return (
         <div>
-            <h2 className="text-center">ManageContest </h2>
+            <h2 className="text-center text-2xl font-semibold">Manage Contests </h2>
             <h2 className="text-left translate-x-5 text-xl ">Total Contest: <span className="text-red-900">{contests.length}</span></h2>
             <div className="overflow-x-auto">
                 <table className="table">
@@ -87,7 +88,7 @@ const ManageContest = () => {
                     <tbody>
                     {/* row 1 */}
                     {
-                        contests.map((contest, index) =>(
+                        contests.slice().reverse().map((contest, index) =>(
                             <tr key={index}>
                                 <th className="translate-x-3">({index+1})</th>
                                 <td className="font-bold ">{contest.name}</td>

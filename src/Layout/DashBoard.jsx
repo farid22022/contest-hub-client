@@ -34,8 +34,8 @@ const Dashboard = () => {
                         
 
                         <div className="text-center">
-                            <img className="rounded-full w-1/2 mb-5 " src={user?.photoURL}/>
-                            <h2 className="badge badge-secondary mb-5">{user?.displayName}</h2>
+                            <img className="rounded-full w-1/2 mb-5 translate-x-12 transition-all duration-1000" src={user?.photoURL}/>
+                            <h2 className="badge badge-secondary mb-10">{user?.displayName}</h2>
                         </div>  
                     
                     

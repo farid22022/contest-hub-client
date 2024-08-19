@@ -1,0 +1,5 @@
+.payment {
+    background-image: url('../../../../public/card.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}

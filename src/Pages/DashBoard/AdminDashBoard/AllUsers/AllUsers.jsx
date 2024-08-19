@@ -181,6 +181,8 @@ const AllUsers = () => {
 
     return (
         <div>
+        <p className="text-center text-2xl font-bold"> Users Section</p>
+        <p>Total users : {users.length}</p>
             <div className="overflow-x-auto">
   <table className="table ">
     {/* head */}
@@ -191,18 +193,18 @@ const AllUsers = () => {
             <input type="checkbox" className="checkbox" />
           </label>
         </th>
-        <th>Name</th>
+        <th className="translate-x-7">Name</th>
         <th>Email</th>
-        <th>Admin</th>
-        <th>Creator</th>
-        <th>User Details</th>
-        <th>Access</th>
+        <th>Delete</th>
+        <th className="translate-x-5">Admin</th>
+        <th className="translate-x-7">Creator</th>
+        <th className="translate-x-2">Access</th>
       </tr>
     </thead>
     <tbody>
       {/* row 1 */}
       {
-        users.map((user, index) =><tr
+        users.slice().reverse().map((user, index) =><tr
         key={user._id}>
             <th>
                 {index+1}

@@ -25,6 +25,7 @@ import SubmittedContests from "../Pages/DashBoard/UserDashBoard/Profile/Submitte
 import CommentBox from "../Pages/DashBoard/AdminDashBoard/ManageContest/CommentBox";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Comments from "../Pages/DashBoard/CreatorDashBoard/ContestSubmitted/Comments/Comments";
+import Payment from "../Pages/Shared/Payment/Payment";
 
 export const router = createBrowserRouter([
     {
@@ -55,6 +56,11 @@ export const router = createBrowserRouter([
             },
             {
                path: '/up'
+            },
+            {
+              path:'/payment/:id',
+              element:<Payment></Payment>,
+              loader: ({params}) => fetch(`https://contest-hub-server-alpha.vercel.app/contests/${params.id}`)
             }
         ]
     },

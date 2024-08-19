@@ -86,28 +86,14 @@ const CreatedContest = () => {
         
     }
 
-    const handleAcceptContest = id =>{
+    const handleAcceptContest = () =>{
 
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, accept it!"
-          }).then((result) => {
-            if (result.isConfirmed) {
-                axiosPublic.patch(`/contests/${id}`)
-                    .then(res => {
-                        console.log("accepted",res.data)
-                    })
-                Swal.fire({
-                    title: "Accepted!",
-                    text: "This contest has been accepted.",
-                    icon: "success"
-              });
-            }
+            title: "Alert!",
+            text: "Only admin can accept it . You are not admin",
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: "Custom image"
           });
     }
 

@@ -17,7 +17,6 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
   const [available, setAvailable] = useState(true);
   
   const [remainingTime, setRemainingTime] = useState('');
-  const [clicked, setClicked] = useState(false)
 
   useEffect( () =>{
     const contestDate = moment(contest.date);
@@ -94,7 +93,7 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
                 <>
                 {
                 isSubmitted?
-                <button className="btn btn-error">Submitted</button>
+                <button className="btn btn-error bg-green-700">Submitted</button>
                 :
                 <>
                   {
@@ -102,7 +101,7 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
                     <button className="btn btn-error text-red-700">Winner Is Declared</button>
                     :
                     <div className="card-actions justify-end">
-                      <Link to={`/submitted/${contest._id}`}>
+                      <Link to={`/payment/${contest._id}`}>
                         <button className="btn btn-primary">Register</button>
                       </Link>
 

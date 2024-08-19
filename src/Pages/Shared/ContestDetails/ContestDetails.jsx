@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 // import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
 // import useAxiosPublic from "../../../Hooks/useAxiosPublic";
@@ -62,9 +62,32 @@ const ContestDetails = () => {
         Swal.fire({
           title: "Submitted!",
           text: `This ${contest.name} has been Submitted.`,
-          icon: "Submitted"
+          icon: "Submitted",
+          timer:1500,
         });
-        navigate('/')
+        let timerInterval;
+          Swal.fire({
+            title: "Auto close alert!",
+            html: "I will close in <b></b> milliseconds.",
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log("I was closed by the timer");
+            }
+          });
+        navigate('/dashboard/profile')
 
       }
     });
@@ -154,6 +177,9 @@ const ContestDetails = () => {
                     name="liveLink"
                     className="input input-bordered"
                   />
+                </div>
+                <div>
+                  <Link to="/payment"><button>Pay</button></Link>
                 </div>
               </div>
               <div className="form-control mt-6 flex">

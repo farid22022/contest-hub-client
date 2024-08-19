@@ -114,93 +114,88 @@ const Banner2 = () => {
                 <a href="#slide2" className="btn absolute sm:top-16 sm:text-xs md:btn-circle md:top-20 top-36 right-6">❯</a>
                 </div>
             </div>
-            <div id="slide2" className="carousel-item relative w-full transition-all duration-1000 ">
+            <div id="slide2"  className={`carousel-item relative w-full transition-all duration-1000`}>
                 <img
-                // src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.jpg"
                 src={Banner20}
-                className="w-full" />
+                className={`w-full ${isClicked?'blur-xl':''} shadow-2xl shadow-slate-600 border-opacity-10 transition-all duration-1000`} />
                 <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                <div className="ml-96">
-                    <div className="inline-block mt-16 mb-12 sm:mt-0 sm:mb-0 md:mb-0 md:mt-0 ">
+                <div onMouseEnter={handleSetBlurEffect} onMouseLeave={handleRemoveBlurEffect}  className={`ml-96 mt-   search-bar hover:shadow-2xl hover:shadow-black  ${isClicked ? 'translate-y-10':''} transition-all duration-1000`}>
+                    <div onClick={handleSetClickedOn} className={`inline-block mt-16 mb-12 sm:mt-0 rounded-md sm:mb-0 md:mb-0 md:mt-0 ${isClicked ? '':''}`}>
                         <input 
                             type="text"
                             placeholder="tag"
                             required
                             value={searchInput}  // Bind input value to searchInput state
                             onChange={(e) => setSearchInput(e.target.value)}  // Update state on input change
-                            className=" p-2 rounded-l-2xl bg-yellow-100 text-xl"
+                            className={`p-2 rounded-l-2xl bg-yellow-100 text-xl ${isClicked ? 'p-5 shadow-2xl w-96 transition-all duration-1000 shadow-slate-700': ''} transition-all duration-1000`}
                         />
                         <button 
-                            className="text-xl bg-slate-500 rounded-l-2xl p-2"
+                            className={`text-xl bg-slate-500 rounded-l-2xl p-2 ${isClicked ? 'p-5 w-44 shadow-slate-700':''} transition-all duration-1000`}
                             onClick={handleSearch}  // Call handleSearch on button click
                         >
-                            
-                            <h2><FiSearch className="text-xs inline-flex "/>Search</h2>
+                            <h2><FiSearch className="text-xs inline-flex"/>Search</h2>
                         </button>
                     </div>
                 </div>
-                <a href="#slide1" className="btn  absolute sm:top-16 sm:text-xs md:btn-circle md:top-20  top-36 right-48 ">❮</a>
-                <a href="#slide3" className="btn  absolute sm:top-16 sm:text-xs md:btn-circle md:top-20  top-36 right-6">❯</a>
+                <a href="#slide1" className="btn absolute sm:top-16 sm:text-xs md:btn-circle md:top-20 top-36 right-48">❮</a>
+                <a href="#slide3" className="btn absolute sm:top-16 sm:text-xs md:btn-circle md:top-20 top-36 right-6">❯</a>
                 </div>
             </div>
-            <div id="slide3" className="carousel-item relative w-full transition-all duration-1000 ">
+            <div id="slide3"  className={`carousel-item relative w-full transition-all duration-1000`}>
                 <img
-                // src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.jpg"
                 src={Banner3}
-                className="w-full" />
+                className={`w-full ${isClicked?'blur-xl':''} shadow-2xl shadow-slate-600 border-opacity-10 transition-all duration-1000`} />
                 <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                <div className="ml-96">
-                    <div className="inline-block  mt-16 mb-12 sm:mt-0 sm:mb-0 md:mb-0 md:mt-0 ">
+                <div onMouseEnter={handleSetBlurEffect} onMouseLeave={handleRemoveBlurEffect}  className={`ml-96 mt-   search-bar hover:shadow-2xl hover:shadow-black  ${isClicked ? 'translate-y-10':''} transition-all duration-1000`}>
+                    <div onClick={handleSetClickedOn} className={`inline-block mt-16 mb-12 sm:mt-0 rounded-md sm:mb-0 md:mb-0 md:mt-0 ${isClicked ? '':''}`}>
                         <input 
                             type="text"
                             placeholder="tag"
                             required
                             value={searchInput}  // Bind input value to searchInput state
                             onChange={(e) => setSearchInput(e.target.value)}  // Update state on input change
-                            className=" p-2 rounded-l-2xl bg-yellow-100 text-xl"
+                            className={`p-2 rounded-l-2xl bg-yellow-100 text-xl ${isClicked ? 'p-5 shadow-2xl w-96 transition-all duration-1000 shadow-slate-700': ''} transition-all duration-1000`}
                         />
                         <button 
-                            className="text-xl bg-slate-500 rounded-l-2xl p-2"
+                            className={`text-xl bg-slate-500 rounded-l-2xl p-2 ${isClicked ? 'p-5 w-44 shadow-slate-700':''} transition-all duration-1000`}
                             onClick={handleSearch}  // Call handleSearch on button click
                         >
-                            
-                            <h2><FiSearch className="text-xs inline-flex "/>Search</h2>
+                            <h2><FiSearch className="text-xs inline-flex"/>Search</h2>
                         </button>
                     </div>
                 </div>
-                <a href="#slide2" className="btn  absolute sm:top-16 sm:text-xs  md:btn-circle md:top-20  top-36 right-48 ">❮</a>
-                <a href="#slide4" className="btn  absolute sm:top-16 sm:text-xs  md:btn-circle md:top-20  top-36 right-6">❯</a>
+                <a href="#slide2" className="btn absolute sm:top-16 sm:text-xs md:btn-circle md:top-20 top-36 right-48">❮</a>
+                <a href="#slide4" className="btn absolute sm:top-16 sm:text-xs md:btn-circle md:top-20 top-36 right-6">❯</a>
                 </div>
             </div>
-            <div id="slide4" className="carousel-item relative w-full transition-all duration-1000 ">
+            <div id="slide4"  className={`carousel-item relative w-full transition-all duration-1000`}>
                 <img
-                // src="https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.jpg"
                 src={Banner4}
-                className="w-full" />
+                className={`w-full ${isClicked?'blur-xl':''} shadow-2xl shadow-slate-600 border-opacity-10 transition-all duration-1000`} />
                 <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                <div className="ml-96">
-                    <div className="inline-block  mt-16 mb-12 sm:mt-0 sm:mb-0 md:mb-0 md:mt-0 ">
+                <div onMouseEnter={handleSetBlurEffect} onMouseLeave={handleRemoveBlurEffect}  className={`ml-96 mt-   search-bar hover:shadow-2xl hover:shadow-black  ${isClicked ? 'translate-y-10':''} transition-all duration-1000`}>
+                    <div onClick={handleSetClickedOn} className={`inline-block mt-16 mb-12 sm:mt-0 rounded-md sm:mb-0 md:mb-0 md:mt-0 ${isClicked ? '':''}`}>
                         <input 
                             type="text"
                             placeholder="tag"
                             required
                             value={searchInput}  // Bind input value to searchInput state
                             onChange={(e) => setSearchInput(e.target.value)}  // Update state on input change
-                            className=" p-2 rounded-l-2xl bg-yellow-100 text-xl"
+                            className={`p-2 rounded-l-2xl bg-yellow-100 text-xl ${isClicked ? 'p-5 shadow-2xl w-96 transition-all duration-1000 shadow-slate-700': ''} transition-all duration-1000`}
                         />
                         <button 
-                            className="text-xl bg-slate-500 rounded-l-2xl p-2"
+                            className={`text-xl bg-slate-500 rounded-l-2xl p-2 ${isClicked ? 'p-5 w-44 shadow-slate-700':''} transition-all duration-1000`}
                             onClick={handleSearch}  // Call handleSearch on button click
                         >
-                            
-                            <h2><FiSearch className="text-xs inline-flex "/>Search</h2>
+                            <h2><FiSearch className="text-xs inline-flex"/>Search</h2>
                         </button>
                     </div>
                 </div>
-                <a href="#slide3" className="btn  absolute sm:top-16 sm:text-xs  md:btn-circle md:top-20  top-36 right-48 ">❮</a>
-                <a href="#slide1" className="btn  absolute sm:top-16 sm:text-xs  md:btn-circle md:top-20  top-36 right-6">❯</a>
+                <a href="#slide3" className="btn absolute sm:top-16 sm:text-xs md:btn-circle md:top-20 top-36 right-48">❮</a>
+                <a href="#slide1" className="btn absolute sm:top-16 sm:text-xs md:btn-circle md:top-20 top-36 right-6">❯</a>
                 </div>
             </div>
+            
             
         </div>
     );

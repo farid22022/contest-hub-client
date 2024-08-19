@@ -1,6 +1,7 @@
 
 
 
+import { useState } from "react";
 import useContest from "../../../Hooks/useContest";
 
 // const CreatorPart = () => {
@@ -46,15 +47,37 @@ import useContest from "../../../Hooks/useContest";
 
 
 const CreatorPart = () => {
+    const [isVisible, setIsVisible] = useState(3)
     const [contests] = useContest();
-    const createdEmails = [...new Set(contests.filter(contest => contest.createdEmail).map(contest => contest.createdEmail))];
-    console.log(createdEmails)
+    console.log(contests)
+    const emailContestCount = contests.reduce((acc, contest) => {
+        if (contest.createdEmail) {
+            acc[contest.createdEmail] = (acc[contest.createdEmail] || 0) + 1;
+        }
+        return acc;
+    }, {});
+    
+    console.log(emailContestCount);
+
+    
+
+    // Convert the object into an array of [email, count] pairs and sort it
+    const ArrayOfContests = Object.entries(emailContestCount)
+        .sort((a, b) => b[1] - a[1]); // Sort by the count in descending order
+
+    console.log(ArrayOfContests);
+    const handleSeeMore = () =>{
+        setIsVisible(ArrayOfContests.length)
+    }
+    const handleSeeLess = () =>{
+        setIsVisible(3+isVisible)
+    }    
     return (
-        <div>
-            <h3>All Creator{contests.length} {createdEmails.length}</h3>
-            <div>
+        <div className="transition-all duration-1000">
+            {/* <h3>All Creator{contests.length} {createdEmails.length}</h3> */}
+            <div className="grid grid-cols-3">
                 {
-                    createdEmails.slice(0,2).map((Email,index) =>(
+                    ArrayOfContests.slice(0,isVisible).map(([Email,count],index) =>(
                         <div className="card bg-base-100 w-96 shadow-xl" key={index}>
                         <div className="card-body">
                             {
@@ -67,12 +90,22 @@ const CreatorPart = () => {
                             <h2 className="card-title">Email</h2>
                             <h2 className='text-emerald-600'>{Email}</h2>
                             <p>Created Contest : <p className='badge bg-red-800'>{
-                                
+                                count
                             }</p></p>
                             
                         </div>
                    </div>
                     ))
+                }
+            </div>
+            <div className="text-center mt-6">
+                {
+                    isVisible < ArrayOfContests.length && 
+                    <button onClick={handleSeeMore} className="btn btn-outline btn-primary mx-2">See More</button>
+                }
+                {
+                    isVisible > 3 && 
+                    <button onClick={handleSeeLess} className="btn btn-outline btn-secondary mx-2">See Less</button>
                 }
             </div>
         </div>

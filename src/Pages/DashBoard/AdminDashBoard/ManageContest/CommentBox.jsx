@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../../Hooks/useAuth";
 
 
 const CommentBox = ({ commentedContest, commentedContestEmail }) => {
@@ -19,6 +20,8 @@ const CommentBox = ({ commentedContest, commentedContestEmail }) => {
             return res.data;
         }
     });
+
+    const { user } = useAuth();
 
 
 
@@ -54,7 +57,9 @@ const CommentBox = ({ commentedContest, commentedContestEmail }) => {
                     commentDescription: comment,
                     contestName: commentedContest,
                     createdEmail: commentedContestEmail,
-                    commentTime:currentTime
+                    commentTime:currentTime,
+                    authName:user.displayName,
+                    authEmail:user.email
                 };
                 axiosPublic.post('/commentDetails', newComment).then(() => {
                     Swal.fire({
