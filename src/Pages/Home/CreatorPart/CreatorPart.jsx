@@ -73,12 +73,12 @@ const CreatorPart = () => {
         setIsVisible(3+isVisible)
     }    
     return (
-        <div className="transition-all duration-1000">
-            {/* <h3>All Creator{contests.length} {createdEmails.length}</h3> */}
-            <div className="grid grid-cols-3">
+        <div className="transition-all duration-1000 mt-10 mb-12 pt-10 z-50">
+            <h3 className="text-center text-yellow-800 font-semibold text-2xl mb-12">All Creator</h3>
+            <div className="grid grid-cols-3 space-y-3">
                 {
                     ArrayOfContests.slice(0,isVisible).map(([Email,count],index) =>(
-                        <div className="card bg-base-100 w-96 shadow-xl" key={index}>
+                        <div className="card bg-base-100 w-96 shadow-xl shadow-emerald-300" key={index}>
                         <div className="card-body">
                             {
                                 (index===0) &&

@@ -71,7 +71,7 @@ const ArrayOfContests = () => {
         <div className={` mt-16 shadow-2xl shadow-slate-600 border-opacity-20 border-emerald-50 ${isClicked ? 'blur-xl':''} transition-all duration-1000`}>
             
             
-            <div className="fixedImageHome bg-fixed pt-12  shadow-black shadow-2xl ">
+            { user && <div className="fixedImageHome bg-fixed pt-12  shadow-black shadow-2xl ">
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-x-6 space-y-6 pb-12">
                 {
                     finalArrayOfContest
@@ -92,7 +92,7 @@ const ArrayOfContests = () => {
                 <div className="text-center mt-6 pb-8">
                     <Link to="/allContests"><button>See More</button></Link>
                 </div>
-            </div>
+            </div>}
             
         </div>
     );

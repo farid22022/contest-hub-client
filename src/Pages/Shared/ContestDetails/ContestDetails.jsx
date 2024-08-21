@@ -178,9 +178,6 @@ const ContestDetails = () => {
                     className="input input-bordered"
                   />
                 </div>
-                <div>
-                  <Link to="/payment"><button>Pay</button></Link>
-                </div>
               </div>
               <div className="form-control mt-6 flex">
                 <button className="btn btn-primary">Submit</button>

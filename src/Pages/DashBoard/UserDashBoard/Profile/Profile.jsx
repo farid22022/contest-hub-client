@@ -32,7 +32,7 @@ const Profile = () => {
         <div className="  ml-24 ">
             <h2 className="text-2xl font-serif font-bold text center mt-8 ml-24 hover:text-4xl hover:mb-4 transition-all duration-1000">Your Profile's Information</h2>
             <div className="bgImage card translate-x-5 bg-base-100 shadow-xl p-5 ml- hover:mt-4 w-auto transition-all hover:border-yellow-800 duration-1000">
-            <figure><img className="rounded-full hover:shadow-inner hover:shadow-red-600 transition-all duration-1000" src={user?.photoURL} alt="loading" /></figure>
+            <figure><img className="rounded-full hover:shadow-inner hover:shadow-red-600 transition-all duration-1000 w-1/4" src={user?.photoURL} alt="loading" /></figure>
             <div className="card-body hover:shadow-inner rounded-full hover:shadow-red-700">
                 <h2 className="card-title">Name: <span>{user?.displayName}</span></h2>
                 <p className="">Email: <span className="badge bg-pink-500 text-black">{user?.email}</span></p>
@@ -57,12 +57,7 @@ const Profile = () => {
                 
                 </div>
             </div>
-            <div className="border-spacing-1 border bg-teal-700 rounded-sm p-2 hover:text-lg hover:p-0 transition-all duration-1000">
-                <p className="text-red-900 font-extrabold">There occurred a problem ! !</p>
-                <button onClick={handleProblem} className="bg-red-700">Click here ! </button>
-                <p>Click on my email address below 👇</p>
-                <Link to="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=new">mdfaridhossenrehad@gmail.com</Link>
-            </div>
+            
             </div>
         </div>
     );

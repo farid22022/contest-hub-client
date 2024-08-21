@@ -57,6 +57,7 @@ const Banner2 = () => {
         setBannerSearchedItems(searchedContests);
         console.log(bannerSearchedItems);
         setIsBlur(false);
+        isClicked(false)
         
     };
 
