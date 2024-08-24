@@ -5,6 +5,7 @@ import usePersonalSubmittedContests from "../../../../Hooks/usePersonalSubmitted
 import './profile.css'
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 
 const Profile = () => {
@@ -14,22 +15,16 @@ const Profile = () => {
     console.log(PersonalSubmittedContests);
     console.log(submittedContests);
 
-    const handleProblem = () =>{
-        Swal.fire({
-            title: "Problem!",
-            text: "Unfortunately this service is expired.If you want to be Admin , you have to mail me.",
-            link:"My email address: mdfaridhossenrehad@gmail.com",
-            imageUrl: "https://i.ibb.co/S3zNLB0/auth-Problem.png",
-            imageWidth: 1200,
-            imageHeight: 100,
-            imageAlt: "Custom image"
-          });
-    }
+    
     
 
 
     return (
-        <div className="  ml-24 ">
+        <motion.div className="  ml-24 "
+            initial={{ x : '100vw' ,}}
+            animate={{ x : 0 }}
+            transition={{type:'spring', stiffness:350, delay:1 ,duration:2}}
+        >
             <h2 className="text-2xl font-serif font-bold text center mt-8 ml-24 hover:text-4xl hover:mb-4 transition-all duration-1000">Your Profile's Information</h2>
             <div className="bgImage card translate-x-5 bg-base-100 shadow-xl p-5 ml- hover:mt-4 w-auto transition-all hover:border-yellow-800 duration-1000">
             <figure><img className="rounded-full hover:shadow-inner hover:shadow-red-600 transition-all duration-1000 w-1/4" src={user?.photoURL} alt="loading" /></figure>
@@ -59,7 +54,7 @@ const Profile = () => {
             </div>
             
             </div>
-        </div>
+        </motion.div>
     );
 };
 

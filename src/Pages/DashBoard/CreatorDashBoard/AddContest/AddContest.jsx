@@ -7,6 +7,7 @@ import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import useAuth from "../../../../Hooks/useAuth";
 import { index } from "../../../../Layout/DashBoard";
+import { motion } from "framer-motion";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -59,9 +60,16 @@ const AddContest = () => {
 
     return (
         
-        <div className="grid grid-cols-1  ml-72 p-2 hover:shadow-inner shadow-2xl shadow-slate-300  rounded-xl hover:shadow-slate-950  hover:ml-10 w-2/3 hover:w-full transition-all duration-1000 ">
-            <h3 className=" text-yellow-900 hover:ml-16 hover:text-yellow-300 transition-all duration-1000  text-3xl bg-slate-600 font-bold text-center rounded-xl p-2">Add A Contest{index}</h3>
-            <form className="grid grid-cols-1 text-center justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
+        <motion.div className="grid grid-cols-1  ml-72 p-2 hover:shadow-inner shadow-2xl shadow-slate-300  rounded-xl hover:shadow-slate-950 w-full transition-all duration-1000 "
+            initial={{x:'-100vw'}}
+            animate={{x: '-15vw'}}
+            transition={{type:'spring', stiffness:350 ,  duration:.5}}
+        >
+            <h3 className=" text-yellow-900 hover:ml-16 hover:text-yellow-300 transition-all duration-1000  text-3xl bg-slate-600 font-bold text-center rounded-xl p-2">Add A Contest</h3>
+            <form className="grid grid-cols-1 text-center justify-center items-center" onSubmit={handleSubmit(onSubmit)}
+                
+
+            >
                 <div className=" form-control w-full"> 
                     <label className="label">
                         <span className="label-text">Contest Name</span>
@@ -149,7 +157,7 @@ const AddContest = () => {
                 </button>
             </form>
             <button className="btn btn-ghost bg-blue-800 w-1/6 mt-6">Back</button>
-        </div>
+        </motion.div>
     );
 };
 

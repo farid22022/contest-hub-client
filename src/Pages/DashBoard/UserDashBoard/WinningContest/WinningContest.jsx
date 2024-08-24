@@ -1,43 +1,8 @@
-// import { useEffect, useState } from "react";
-// import useAuth from "../../../../Hooks/useAuth";
-// import useWinner from "../../../../Hooks/useWinner";
-// import { key } from "localforage";
-
-
-// const WinningContest = () => {
-//     const { user } = useAuth();
-//     const [ winners ] = useWinner();
-//     const [WinningContests, setWinningContests] = useState([]);
-    
-
-
-//     console.log(WinningContests)
-
-
-//     return (
-//         <div>
-//             <h2>WinningContest {WinningContests.length}</h2>
-//             <div>
-//                 {
-//                     WinningContests?.map((contest,index) =>
-//                     <div key={index}>
-//                         <h2>Serial; {key+1}</h2>
-//                         <div className="card">
-//                             {/* <h2>COntest name : {contest}</h2> */}
-//                         </div>
-//                     </div>
-//                     )
-//                 }
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default WinningContest;
 
 import { useEffect, useState } from "react";
 import useAuth from "../../../../Hooks/useAuth";
 import useWinner from "../../../../Hooks/useWinner";
+import { motion } from "framer-motion";
 
 const WinningContest = () => {
     const { user } = useAuth();
@@ -59,19 +24,39 @@ const WinningContest = () => {
                     {/* head */}
                     <thead>
                     <tr>
-                        <th>Serial</th>
-                        <th>Name</th>
+                        <th className="text-xl text-black">Serial</th>
+                        <th className="text-xl text-black">Name</th>
                     </tr>
                     </thead>
                     <tbody>
                     {/* row 1 */}
                     {
-                        winningContests.map((contest,index) =>
-                            <tr key={index+1}>
-                                <th>{index+1}</th>
-                                <td>{contest.winnerContest}</td>
-                                
-                            </tr>
+                        winningContests.map((contest,index) =>{
+                            let initialPosition = {};
+
+                            if((index%3) === 0){
+                                initialPosition = { x : '-100vw'}
+                            }
+                            else if((index%3) === 1){
+                                initialPosition = { y : '100vw' }
+                            }
+                            else {
+                                initialPosition = { x : '100vw' }
+                            }
+                            return (
+                                <motion.tr key={index+1}
+                                    initial={initialPosition}
+                                    animate={{ x: 0, y: 0 , opacity:95}}
+                                    transition={{ type: 'spring', stiffness: 200, delay: .6 * index }}
+                                >
+                                    <th className="text-xl text-black bg-red-500">[{index+1}]</th>
+                                    <td className="text-xl font-semibold text-black bg-slate-500">{contest.winnerContest}</td>
+                                    
+                                </motion.tr>
+                            )
+                            
+                        }
+                         
                         )
                     }
                     
@@ -84,3 +69,8 @@ const WinningContest = () => {
 };
 
 export default WinningContest;
+{/* <tr key={index+1}>
+                                <th>{index+1}</th>
+                                <td>{contest.winnerContest}</td>
+                                
+                            </tr> */}

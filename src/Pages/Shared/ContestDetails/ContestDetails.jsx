@@ -5,6 +5,7 @@ import useAuth from "../../../Hooks/useAuth";
 // import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { motion } from "framer-motion";
 
 const ContestDetails = () => {
   const contest = useLoaderData();
@@ -96,12 +97,18 @@ const ContestDetails = () => {
   };
 
   return (
-    <div className="text-center lg:ml-36 md:ml-32 sm:ml-12 mt-12">
+    <motion.div className="text-center lg:ml-36 md:ml-32 sm:ml-12 mt-12"
+      initial={{ x: '-100vw', y: '-50vw' , z:10}}
+      animate={{ x: '7vw' , y : '3vw', z:10 }}
+      transition={{type: "spring", stiffness: 100, damping: 10}} 
+     >
       <Helmet>
         <title>Submit</title>
       </Helmet>
       <div className="card card-compact w-3/4 text-center bg-base-100 shadow-xl shadow-blue-950">
-        <div className="card-body">
+        <div className="card-body"
+          
+        >
           <div>
             <img className="w-1/2 rounded-xl shadow-2xl shadow-green-800" src={contest.image}/>
           </div>
@@ -188,7 +195,7 @@ const ContestDetails = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

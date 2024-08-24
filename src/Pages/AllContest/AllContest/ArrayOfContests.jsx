@@ -7,6 +7,7 @@ import useAuth from "../../../Hooks/useAuth";
 import usePersonalDetails from "../../../Hooks/usePersonalDetails";
 import './styles.css'
 import { AuthContext } from "../../../providers/AuthProvider";
+import { motion } from "framer-motion";
 const ArrayOfContests = () => {
     const [ personalDetails ] = usePersonalDetails();
     console.log(personalDetails);
@@ -80,7 +81,11 @@ const ArrayOfContests = () => {
         
         <div className={`fixedImage bg-fixed mt-12 ${isClicked ?'blur-xl':''}`}>
             <div>
-                <div className="inline-block mt-16 mb-12 ">
+                <motion.div className="inline-block mt-16 mb-12 "
+                    initial={{x:'100vw'}}
+                    animate={{x:'10vw'}}
+                    transition={{type:'spring',duration:2.5 , stiffness:300}}
+                >
                     <input 
                         type="text"
                         placeholder="tag"
@@ -96,19 +101,41 @@ const ArrayOfContests = () => {
                         
                         <h2><FiSearch className="text-xs inline-flex "/>Search</h2>
                     </button>
-                </div>
+                </motion.div>
             </div>
             <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-x-3 space-y-6 mb-12 pb-12 p-4">
                 {
-                    reversedArray.map(contest => (
-                        <Contest
-                            key={contest._id}
-                            contest={contest}
-                            transformedContests={transformedContests}
-                            LoggedUser={LoggedUser}
-                            userAccess={userAccess}
-                        ></Contest>
-                    ))
+                    reversedArray
+                    .filter(contest => contest.accepted)
+                    .map((contest, key) => {
+                        let initialPosition = {};
+
+                        if ((key%3) === 0 ) {
+                            initialPosition = { x: '-100vw' ,opacity:5};  // Slide in from the left
+                        } 
+                        else if ((key%3) === 1) {
+                            initialPosition = { y: '100vh' , opacity:5};  // Slide in from the top
+                        } 
+                        else if ((key%3) === 2) {
+                            initialPosition = { x: '100vw' , opacity:5};   // Slide in from the right
+                        }
+
+                        return (
+                            <motion.div
+                                key={contest._id}
+                                initial={initialPosition}
+                                animate={{ x: 0, y: 0 , opacity:95}}
+                                transition={{ type: 'spring', stiffness: 200, delay: 1.1 * key }}
+                            >
+                                <Contest
+                                    contest={contest}
+                                    transformedContests={transformedContests}
+                                    LoggedUser={LoggedUser}
+                                    userAccess={userAccess}
+                                />
+                            </motion.div>
+                        );
+                    })
                 }
             </div>
         </div>

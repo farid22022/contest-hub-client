@@ -10,6 +10,7 @@ import Banner1 from "./../../../../public/BannerBg/Banner1.jpg"
 import Banner20 from "./../../../../public/BannerBg/Banner2.jpg"
 import Banner3 from "./../../../../public/BannerBg/Banner3.jpg"
 import Banner4 from "./../../../../public/BannerBg/Banner4.jpg"
+import { motion } from "framer-motion";
 const Banner2 = () => {
 
     const [ personalDetails ] = usePersonalDetails();
@@ -87,7 +88,11 @@ const Banner2 = () => {
     
 
     return (
-        <div className={`carousel w-full shadow-2xl shadow-black-u ${isClicked? 'border-opacity-5':''} `}>
+        <motion.div className={`carousel w-full shadow-2xl shadow-black-u ${isClicked? 'border-opacity-5':''} `}
+            initial={{ y: '-100vw' , z:10}}
+            animate={{ y: 0 , z :0}}
+            transition={{ delay :2.5 , type : 'spring', stiffness: 250, duration: 2.5}}
+        >
             <div id="slide1"  className={`carousel-item relative w-full transition-all duration-1000`}>
                 <img
                 src={Banner1}
@@ -198,7 +203,7 @@ const Banner2 = () => {
             </div>
             
             
-        </div>
+        </motion.div>
     );
 };
 

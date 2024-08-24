@@ -12,7 +12,6 @@ import './login.css'
 
 
 const Login = () => {
-    const [isNavigating, setIsNavigate] = useState(false);
     const [disabled, setDisabled] = useState(true);
     const axiosPublic = useAxiosPublic();
     const { signIn , googleLogin} = useContext(AuthContext);
@@ -42,7 +41,7 @@ const Login = () => {
                     Swal.fire({
                     title: `Login Successful!`,
                     html: "Please wait for <b></b> milliseconds.",
-                    timer: 2000,
+                    timer: 1000,
                     timerProgressBar: true,
                     didOpen: () => {
                         Swal.showLoading();
@@ -60,7 +59,6 @@ const Login = () => {
                         console.log("I was closed by the timer");
                     }
                     });
-                setIsNavigate(true);
                 navigate(from, { replace: true });
             })
 
@@ -118,13 +116,13 @@ const Login = () => {
             <Helmet>
                 <title>Contest Hub | Login</title>
             </Helmet>
-            <div className={`hero min-h-screen bg-white ${isNavigating ? 'slide-out-left' : ''}`}>
+            <div className="hero min-h-screen bg-white ">
                 <div className="hero-content flex-col md:flex-row-reverse">
                     <div className="text-center md:w-1/2 lg:text-left">
                         <h1 className="text-5xl font-bold">Login now!</h1>
                         <img className="py-6" src={login}/>
                     </div>
-                    <div className={`card md:w-1/2 max-w-sm shadow-2xl bg-slate-900 opacity-95 shadow-blue-600 ${isNavigating ? 'translate-x-20 transition-all duration-1000':''}`}>
+                    <div className="card md:w-1/2 max-w-sm shadow-2xl bg-slate-900 opacity-95 shadow-blue-600" >
                         <form onSubmit={handleLogin} className="card-body">
                             <div className="form-control">
                                 <label className="label">

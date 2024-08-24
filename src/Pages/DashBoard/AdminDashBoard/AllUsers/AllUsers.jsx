@@ -5,6 +5,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import userImage from '../../../../assets/Profile/user.png'
 import adminImage from '../../../../assets/Profile/admin.png'
 import creatorImage from '../../../../assets/Profile/creator.png'
+import { motion } from "framer-motion";
 
 // export const allUsers ='' ;
 const AllUsers = () => {
@@ -184,109 +185,113 @@ const AllUsers = () => {
         <p className="text-center text-2xl font-bold"> Users Section</p>
         <p>Total users : {users.length}</p>
             <div className="overflow-x-auto">
-  <table className="table ">
-    {/* head */}
-    <thead>
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <th className="translate-x-7">Name</th>
-        <th>Email</th>
-        <th>Delete</th>
-        <th className="translate-x-5">Admin</th>
-        <th className="translate-x-7">Creator</th>
-        <th className="translate-x-2">Access</th>
-      </tr>
-    </thead>
-    <tbody>
-      {/* row 1 */}
-      {
-        users.slice().reverse().map((user, index) =><tr
-        key={user._id}>
-            <th>
-                {index+1}
-            </th>
-            <td>
-            <div className="flex items-center gap-3">
-                <div className="avatar">
-                <div className="mask mask-squircle w-12 h-12">
-                    {/* <img src={user?.imageURL} alt="Avatar Tailwind CSS Component" /> */}
-                    {
-                      (user.role === 'admin')?
-                      <img src={adminImage} alt="Avatar Tailwind CSS Component" />
-                      :
-                      <>
-                        {
-                          (user.role === 'creator')?
-                          <img src={creatorImage} alt="Avatar Tailwind CSS Component" />
-                          :
-                          <img src={userImage} alt="Avatar Tailwind CSS Component" />
-                        }
-                      </>
-                    }
-                </div>
-                </div>
-                <div>
-                <div className="font-bold">{user.name}</div>
-                <div className="text-sm opacity-50 bg-red-700 font-bold rounded-2xl text-center text-white">
-                {
-                  (user.role === 'admin' || user.role ==='creator')?
-                  user.role
-                  :
-                  <h4>participator</h4>
-                }</div>
-                </div>
+              <motion.table className="table "
+                initial={{ x:'250vw' }}
+                animate={{ x:0 }}
+                transition={{type:'spring',duration:users.length,stiffness:250}}
+              >
+                {/* head */}
+                <thead>
+                  <tr>
+                    <th>
+                      <label>
+                        <input type="checkbox" className="checkbox" />
+                      </label>
+                    </th>
+                    <th className="translate-x-7">Name</th>
+                    <th>Email</th>
+                    <th>Delete</th>
+                    <th className="translate-x-5">Admin</th>
+                    <th className="translate-x-7">Creator</th>
+                    <th className="translate-x-2">Access</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* row 1 */}
+                  {
+                    users.slice().reverse().map((user, index) =><tr
+                    key={user._id}>
+                        <th>
+                            {index+1}
+                        </th>
+                        <td>
+                        <div className="flex items-center gap-3">
+                            <div className="avatar">
+                            <div className="mask mask-squircle w-12 h-12">
+                                {/* <img src={user?.imageURL} alt="Avatar Tailwind CSS Component" /> */}
+                                {
+                                  (user.role === 'admin')?
+                                  <img src={adminImage} alt="Avatar Tailwind CSS Component" />
+                                  :
+                                  <>
+                                    {
+                                      (user.role === 'creator')?
+                                      <img src={creatorImage} alt="Avatar Tailwind CSS Component" />
+                                      :
+                                      <img src={userImage} alt="Avatar Tailwind CSS Component" />
+                                    }
+                                  </>
+                                }
+                            </div>
+                            </div>
+                            <div>
+                            <div className="font-bold">{user.name}</div>
+                            <div className="text-sm opacity-50 bg-red-700 font-bold rounded-2xl text-center text-white">
+                            {
+                              (user.role === 'admin' || user.role ==='creator')?
+                              user.role
+                              :
+                              <h4>participator</h4>
+                            }</div>
+                            </div>
+                        </div>
+                        </td>
+                        <td>
+                        {user.name}
+                        <br/>
+                        <span className="badge badge-ghost badge-sm p-1">Email: {user.email}</span>
+                        </td>
+                        <td>
+                            <button
+                                onClick={() => handleDeleteUser(user)}
+                                className="btn btn-ghost btn-lg">
+                                <FaTrashAlt className="text-red-600"></FaTrashAlt>
+                            </button>
+                        </td>
+                        <th>
+                            {
+                              !(user.role === 'admin') ?
+                              <button onClick={() =>handleMakeAdmin(user)} className="btn btn-ghost  bg-green-600"> Make Admin</button>
+                              :
+                              <button className="btn btn-ghost  bg-blue-600">Admin</button>
+                            }
+                        </th>
+                        <th>
+                            {
+                              !(user.role === 'creator') ?
+                              <button onClick={() =>handleMakeCreator(user)} className="btn btn-ghost  bg-green-600"> Make Creator</button>
+                              :
+                              <button className="btn btn-ghost  bg-blue-600">Contest Creator</button>
+                            }
+                        </th>
+                        <th>
+                          {
+                            (user?.access === 'on') ?
+                            <button onClick={() =>handleAccessOff(user)} className="btn btn-ghost  bg-green-600"> Block</button>
+                            :
+                            <button onClick={() =>handleAccessOn(user)} className="btn btn-ghost  bg-green-600"> Unblock</button>
+                          }
+                        </th>
+                  </tr>)
+                  }
+                  
+                  
+                  
+                </tbody>
+              
+                
+              </motion.table>
             </div>
-            </td>
-            <td>
-            {user.name}
-            <br/>
-            <span className="badge badge-ghost badge-sm p-1">Email: {user.email}</span>
-            </td>
-            <td>
-                <button
-                    onClick={() => handleDeleteUser(user)}
-                    className="btn btn-ghost btn-lg">
-                    <FaTrashAlt className="text-red-600"></FaTrashAlt>
-                </button>
-            </td>
-            <th>
-                {
-                  !(user.role === 'admin') ?
-                  <button onClick={() =>handleMakeAdmin(user)} className="btn btn-ghost  bg-green-600"> Make Admin</button>
-                  :
-                  <button className="btn btn-ghost  bg-blue-600">Admin</button>
-                }
-            </th>
-            <th>
-                {
-                  !(user.role === 'creator') ?
-                  <button onClick={() =>handleMakeCreator(user)} className="btn btn-ghost  bg-green-600"> Make Creator</button>
-                  :
-                  <button className="btn btn-ghost  bg-blue-600">Contest Creator</button>
-                }
-            </th>
-            <th>
-              {
-                (user?.access === 'on') ?
-                <button onClick={() =>handleAccessOff(user)} className="btn btn-ghost  bg-green-600"> Block</button>
-                :
-                <button onClick={() =>handleAccessOn(user)} className="btn btn-ghost  bg-green-600"> Unblock</button>
-              }
-            </th>
-      </tr>)
-      }
-      
-      
-      
-    </tbody>
-   
-    
-  </table>
-</div>
         </div>
     );
 };

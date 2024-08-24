@@ -49,9 +49,9 @@ const TableRow = ({serial,submittedContest,prizeMoney,name}) => {
             {
                 declared?
                 <td className="">
-                    <button className="btn btn-error grid grid-cols-1 ml-20 text-center">
-                        <h2 className="ml-4">Declared 📢</h2>
-                        <h3 className="ml-4">Winner is : {winnerParticipator}</h3>
+                    <button className="btn btn-error grid grid-cols-2 space-x-40  text-center relative">
+                        <h2 className="">Declared . Winner is :📢</h2>
+                        <h3 className="absolute translate-x-5"> {winnerParticipator}</h3>
                     </button>
                 </td>
                 :

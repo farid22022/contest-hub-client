@@ -8,6 +8,7 @@ import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import useAuth from "../../../../Hooks/useAuth";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -63,7 +64,11 @@ const UpdateContest = () => {
     };
 
     return (
-        <div className="grid grid-cols-1">
+        <motion.div className="grid grid-cols-1"
+            initial={{x:'-100vw'}}
+            animate={{x: 0}}
+            transition={{type:'spring', stiffness:250 , delay: .5, duration:1.5}}
+        >
             <form className="grid grid-cols-1 text-center justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control w-full">
                     <label className="label">
@@ -165,7 +170,7 @@ const UpdateContest = () => {
                     Add Item <FaUtensils className="ml-4" />
                 </button>
             </form>
-        </div>
+        </motion.div>
     );
 };
 

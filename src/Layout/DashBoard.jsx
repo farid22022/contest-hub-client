@@ -12,6 +12,8 @@ import createCOntestIcon from '../../public/design.png'
 import homeIcon from '../../public/house.png';
 import useAdmin from "../Hooks/useAdmin";
 import useAuth from "../Hooks/useAuth";
+import { motion } from "framer-motion";
+
 export let index =0;
 
 const Dashboard = () => {
@@ -26,10 +28,18 @@ const Dashboard = () => {
 
 
     return (
-        <div className="flex ">
+        <motion.div className="flex "
+            
+        >
             {/* dashboard side bar */}
-            <div className="w-64 min-h-screen bg-slate-900">
-                <ul className="menu p-4">
+            <motion.div className="w-64 min-h-screen bg-slate-900"
+                initial={{ x: '-100vw' }}
+                animate={{ x: 0 }}
+                transition={{type:"spring",stiffness: 150, duration: 2.5,  }}
+            >
+                <motion.ul className="menu p-4"
+                
+                >
                     
                         
 
@@ -100,13 +110,13 @@ const Dashboard = () => {
                                     Participated Contest</NavLink>
                             </li>
                         </>
-                </ul>
-            </div>
+                </motion.ul>
+            </motion.div>
             {/* dashboard content */}
             <div className="flex-1 p-8">
                 <Outlet></Outlet>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

@@ -7,6 +7,7 @@ import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import useAdmin from "../../../../Hooks/useAdmin";
 import Swal from "sweetalert2";
 import { index } from "../../../../Layout/DashBoard";
+import { motion } from "framer-motion";
 
 
 const CreatedContest = () => {
@@ -134,8 +135,25 @@ const CreatedContest = () => {
                         {
                             
                                
-                                createdContests.map((contest, index) =>(
-                                <tr key={index}>
+                                createdContests.map((contest, index) =>{
+                                    let initialPosition={};
+
+                                    if((index%3) === 0){
+                                        initialPosition = { x :'-100vw' }
+                                    }
+                                    else if((index%3) === 1){
+                                        initialPosition = { y : '100vw' }
+                                    }
+                                    else if((index%3) === 2){
+                                        initialPosition = { x :'100vw' }
+                                    }
+
+                                    return (
+                                        <motion.tr key={index}
+                                          initial={initialPosition}
+                                          animate={{x:0, y:0}}
+                                          transition={{type:'spring', stiffness:250, delay:index, duration:index}}
+                                        >
                                     
                                     <td className="text-yellow-500 font-serif font-bold text-xl translate-x-2">[{index+1}]</td>
                                     <td><button className="btn btn-info">{contest.name}</button></td>
@@ -171,8 +189,9 @@ const CreatedContest = () => {
                                         <Link to="/dashboard/contestSubmitted"><button className="btn btn-success">Submit</button></Link>
                                     </th>
 
-                                </tr>
-                            ))
+                                </motion.tr>
+                                    )
+                                })
                             }
                             
 
@@ -191,3 +210,5 @@ const CreatedContest = () => {
 };
 
 export default CreatedContest;
+
+                             

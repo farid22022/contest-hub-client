@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useCount from "../../../Hooks/useCount";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 // import usePersonalDetails from "../../../Hooks/usePersonalDetails";
 export const currentTime = moment().format("dddd, MMMM D, YYYY");
 
@@ -102,7 +103,13 @@ const Contest = ({contest, transformedContests, LoggedUser,userAccess}) => {
                     :
                     <div className="card-actions justify-end">
                       <Link to={`/payment/${contest._id}`}>
-                        <button className="btn btn-primary">Register</button>
+                        <motion.button className="btn btn-primary"
+                          whileHover={{ 
+                            scale : 1.2,
+                            textShadow: "0px 0px 8px rgb(255 255 255)",
+                            boxShadow: "0px 0px 8px rgb(255 255 255)"
+                            }}
+                        >Register</motion.button>
                       </Link>
 
                     </div>

@@ -5,6 +5,7 @@ import './style.css'
 // import usePersonalSubmittedContests from "../../../../Hooks/usePersonalSubmittedContests";
 import useArrayOfNameAndEmails from "../../../../Hooks/useArrayOfNameAndEmails";
 import TableRow from "./comopnents/TableRow";
+import { motion } from 'framer-motion';
 
 
 export let contestName='';
@@ -46,11 +47,11 @@ const ContestSubmitted = () => {
                     <table className="table css-selector">
                         {/* head */}
                         <thead>
-                        <tr>
+                        <tr className='relative'>
                             <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-red-600">Serial</th>
-                            <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-yellow-400">Title</th>
-                            <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-green-950">Prize</th>
-                            <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-cyan-900 text-center">Winner</th>
+                            <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-yellow-400 left-20 absolute">Title</th>
+                            <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-green-950 absolute -translate-x-80 right-96">Prize</th>
+                            <th className="text-xl font-serif font-extrabold border-b-4 rounded-b-xl border-red-600 text-cyan-900 absolute -translate-x-80 right-40">Winner</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,8 +72,26 @@ const ContestSubmitted = () => {
                             ))
                         } */}
                         {
-                            extractedArrayOfNameAndEmails.map((submittedContest, index) => (
-                                <>
+                            extractedArrayOfNameAndEmails.map((submittedContest, index) => {
+                                let initialPosition = {};
+
+                                if ((index%3) === 0 ) {
+                                    initialPosition = { x: '-100vw' };  // Slide in from the left
+                                } 
+                                else if ((index%3) === 1) {
+                                    initialPosition = { y: '100vh' };  // Slide in from the top
+                                } 
+                                else if ((index%3) === 2) {
+                                    initialPosition = { x: '100vw' };   // Slide in from the right
+                                }
+                                
+                                return(<motion.div
+                                key={index}
+                                initial={initialPosition}
+                                animate={{ x: 0, y: 0 }}
+                                transition={{ type: 'spring', stiffness: 200, delay: 1.1 * index }}
+                            >
+                                <div key={index}>
                                     <TableRow 
                                         key={index} 
                                         serial={index+1}
@@ -80,8 +99,10 @@ const ContestSubmitted = () => {
                                         prizeMoney={submittedContest.prizeMoney}
                                         name={submittedContest.name}
                                     />
-                                </>
-                            ))
+                                </div>
+                            </motion.div>)
+                                
+                        })
                         }
 
                         </tbody>
