@@ -6,10 +6,12 @@ import './style.css'
 import CommentBox from "./CommentBox";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 // import { motion } from "framer-motion";
 export let commentedContest='';
 export let commentedContestEmail =''
 const ManageContest = () => {
+    const navigate = useNavigate();
     const [ contests ] = useContest();
     console.log(contests)
     const axiosSecure = useAxiosSecure();
@@ -35,6 +37,7 @@ const ManageContest = () => {
                     text: "This contest has been accepted.",
                     icon: "success"
               });
+              navigate('/');
             }
           });
     }
